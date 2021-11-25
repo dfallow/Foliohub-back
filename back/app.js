@@ -9,4 +9,7 @@ const port = 3001;
 app.use(cors());
 app.use('/project', projectRoute);
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 app.listen(port, () => console.log(`Example app listening on port ${port}! http://localhost:${port}`));

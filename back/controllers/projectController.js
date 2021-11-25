@@ -16,6 +16,7 @@ const project_get = async (req, res) => {
 
 const project_post = async (req, res) => {
     try {
+	console.log('project post req.body', req.body);
         const id = await insertProject(req.body);
         res.json({message: `Project added with id ${id}`})
     } catch (e) {
