@@ -13,16 +13,18 @@ const getAllProjects = async () => {
     }
 };
 
-// const projects = [
-//     {
-//         name: 'Best app ever',
-//         date: '23-09-2020',
-//         description: 'Simply the best',
-//         video: '',
-//         pictures: []
-//     }
-// ]
+const getProject = async (projectId) => {
+    try {
+        const query = 'SELECT * FROM projects WHERE id = ?'
+        const [rows] = await promisePool.query(query, [projectId]);
+        return rows[0];
+    } catch (e) {
+        console.error('getProject query', e.message);
+    }
+};
+
 
 module.exports = {
     getAllProjects,
+    getProject,
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 const projectModel = require("../models/projectModel");
-const {getAllProjects} = require("../models/projectModel");
+const {getAllProjects, getProject} = require("../models/projectModel");
 
 // const projects = projectModel.projects;
 
@@ -14,6 +14,11 @@ const project_list_get = async (req, res) => {
     }
 }
 
+const project_get = async (req, res) => {
+    const project = await getProject(req.params.id);
+    res.json(project);
+}
+
 const project_post = (req, res) => {
 
 }
@@ -21,5 +26,6 @@ const project_post = (req, res) => {
 module.exports = {
     project_list_get,
     project_post,
+    project_get,
 }
 
