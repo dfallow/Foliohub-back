@@ -35,8 +35,20 @@ const insertProject = async (project) => {
     }
 }
 
+const deleteProject = async (project) => {
+    try {
+        let sql = 'DELETE FROM projects WHERE id = ?';
+        let params = [project.id];
+        const [row] = await promisePool.query(sql, params);
+        return row.affectedRows === 1;
+    } catch (e) {
+        console.error('delete project error', e.message);
+    }
+}
 
 module.exports = {
     getAllProjects,
     getProject,
+    insertProject,
+    deleteProject,
 }

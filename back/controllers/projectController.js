@@ -26,9 +26,16 @@ const project_post = async (req, res) => {
     }
 }
 
+const project_delete = async (req, res) => {
+    req.body.id = req.params.id;
+    const projectDeleted = await deleteProject(req.body);
+    res.json({ message: 'project deleted successfully ' + projectDeleted});
+}
+
 module.exports = {
     project_list_get,
     project_post,
     project_get,
+    project_delete,
 }
 
