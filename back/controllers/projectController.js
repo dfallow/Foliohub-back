@@ -1,9 +1,7 @@
 'use strict';
 
-const projectModel = require("../models/projectModel");
-const {getAllProjects, getProject} = require("../models/projectModel");
 
-// const projects = projectModel.projects;
+const {getAllProjects, getProject, deleteProject, insertProject} = require("../models/projectModel");
 
 const project_list_get = async (req, res) => {
     const projects = await getAllProjects()
@@ -19,8 +17,13 @@ const project_get = async (req, res) => {
     res.json(project);
 }
 
-const project_post = (req, res) => {
-
+const project_post = async (req, res) => {
+    try {
+        const id = await insertProject(req.body);
+        res.json({message: `Project added with id ${id}`})
+    } catch (e) {
+        console.error('project posting', e.message)
+    }
 }
 
 module.exports = {

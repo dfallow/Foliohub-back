@@ -23,6 +23,18 @@ const getProject = async (projectId) => {
     }
 };
 
+const insertProject = async (project) => {
+    try {
+        const query = 'INSERT INTO projects(name, date, description) VALUES (?, ?, ?)'
+        const params = [project.name, project.date, project.description];
+        const [rows] = await promisePool.query(query, params);
+        console.log('model insert Project', rows);
+        return rows.affectedRows === 1;
+    } catch (e) {
+        console.error('model insert Project', e.message);
+    }
+}
+
 
 module.exports = {
     getAllProjects,
