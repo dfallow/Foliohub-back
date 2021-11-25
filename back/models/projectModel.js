@@ -5,7 +5,7 @@ const promisePool = pool.promise();
 
 const getAllProjects = async () => {
     try {
-        const query = `SELECT * FROM projects`
+        const query = 'SELECT * FROM projects'
         const [rows] = await promisePool.query(query);
         return rows;
     } catch (e) {
