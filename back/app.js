@@ -4,7 +4,7 @@ const express = require('express');
 const projectRoute = require('./routes/projectRoute');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use('/project', projectRoute);
 
