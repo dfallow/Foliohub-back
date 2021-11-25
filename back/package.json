@@ -1,0 +1,20 @@
+{
+  "name": "foliohub",
+  "version": "1.0.0",
+  "description": "github but more visual",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.metropolia.fi/foliohub/foliohub.git"
+  },
+  "author": "Sam Hämäläinen, Soulyvanh Phetsarath",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.3"
+  }
+}
