@@ -7,9 +7,10 @@ const getAllProjects = async () => {
     try {
         const query = 'SELECT * FROM projects'
         const [rows] = await promisePool.query(query);
+        console.log('getAllProjects rows: ', rows)
         return rows;
     } catch (e) {
-        console.error('getAllProjects query', e.message);
+        console.error('getAllProjects query error: ', e.message);
     }
 };
 

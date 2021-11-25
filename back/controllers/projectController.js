@@ -5,11 +5,8 @@ const {getAllProjects, getProject, deleteProject, insertProject} = require("../m
 
 const project_list_get = async (req, res) => {
     const projects = await getAllProjects()
-    if(projects.length > 0) {
-        res.json(projects);
-    } else {
-        res.json({message: 'not getting all projects!'})
-    }
+    console.log('all projects', projects);
+    res.json(projects);
 }
 
 const project_get = async (req, res) => {
@@ -29,7 +26,7 @@ const project_post = async (req, res) => {
 const project_delete = async (req, res) => {
     req.body.id = req.params.id;
     const projectDeleted = await deleteProject(req.body);
-    res.json({ message: 'project deleted successfully ' + projectDeleted});
+    res.json({message: 'project deleted successfully ' + projectDeleted});
 }
 
 module.exports = {
