@@ -48,10 +48,10 @@ const updateUser = async (user) => {
     }
 }
 
-const deleteUser = async (users) => {
+const deleteUser = async (user) => {
     try {
         let sql = 'DELETE FROM users WHERE userId = ?';
-        let params = [users.userId];
+        let params = [user.userId];
         const [row] = await promisePool.query(sql, params);
         return row.affectedRows === 1;
     } catch (e) {

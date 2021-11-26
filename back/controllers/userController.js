@@ -18,7 +18,8 @@ const user_post = async (req, res) => {
 }
 
 const user_delete = async (req , res) => {
-    await deleteUser(req.params.id);
+    req.body.userId = req.params.id;
+    await deleteUser(req.body);
     res.send('User deleted');
 }
 
