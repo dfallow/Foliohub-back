@@ -24,6 +24,7 @@ const user_delete = async (req , res) => {
 }
 
 const user_update = async (req, res) => {
+    req.body.userId = req.params.id;
     const updated = await updateUser(req.body)
     res.send(`User updated ${updated}`);
 }

@@ -38,7 +38,7 @@ const insertUser = async (user) => {
 
 const updateUser = async (user) => {
     try {
-        let sql = 'UPDATE users SET username = ?, email = ?, title = ?, creationDate = ?, github = ?, description = ?, tags = ?, profilePic = ? WHERE id = ?'
+        let sql = 'UPDATE users SET username = ?, email = ?, title = ?, creationDate = ?, github = ?, description = ?, tags = ?, profilePic = ? WHERE userId = ?'
         let params = [user.username, user.email, user.title, user.creationDate, user.github, user.description, user.tags, user.profilePic, user.userId];
         const [rows] = await promisePool.query(sql, params);
         console.log('user updated', rows)
