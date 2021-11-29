@@ -39,8 +39,8 @@ const insertProjectPersonal = async (project) => {
 
 const updateProjectPersonal = async (project, user) => {
     try {
-        let sql = 'UPDATE projects SET name = ?, date = ?, description = ?, video = ?, images = ?, outline = ?, logo = ?, tags = ? WHERE id = ? AND author = ?'
-        let params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.id, user.userId];
+        let sql = 'UPDATE projects SET name = ?, date = ?, description = ?, video = ?, images = ?, outline = ?, logo = ?, tags = ?, private = ? WHERE id = ? AND author = ?'
+        let params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.private, project.id, user.userId];
         const [rows] = await promisePool.query(sql, params);
         console.log('update project personal', rows)
         return rows.affectedRows === 1;
