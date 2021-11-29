@@ -6,24 +6,24 @@ const promisePool = pool.promise();
 const getAllProjects = async (user) => {
     try {
         //roles: admin 1, logged 0, public null
-        const publicQuery = 'SELECT * FROM projects WHERE private = 0';
+        //const publicQuery = 'SELECT * FROM projects WHERE private = 0';
         const adminQuery = 'SELECT * FROM projects';
-        const userQuery = 'SELECT * FROM projects AS p INNER JOIN users AS u on p.author = u.userId'
-        const testQuery = 'SELECT * FROM projects WHERE private = 0 OR author = ?'
+        //const userQuery = 'SELECT * FROM projects AS p INNER JOIN users AS u on p.author = u.userId'
+        //const testQuery = 'SELECT * FROM projects WHERE private = 0 OR author = ?'
 
         let params = [];
 
-        let query = publicQuery;
+        let query = adminQuery;
 
-        if (user.role === 1) {
-            console.log('Get all as admin');
-            query = adminQuery;
-        }
-        if (user.role === 0) {
-            console.log('Get all as logged user');
-            query = testQuery;
-            params = [user.userId]
-        }
+        // if (user.role === 1) {
+        //     console.log('Get all as admin');
+        //     query = adminQuery;
+        // }
+        // if (user.role === 0) {
+        //     console.log('Get all as logged user');
+        //     query = testQuery;
+        //     params = [user.userId]
+        // }
         const [rows] = await promisePool.query(query, params);
         console.log('getAllProjects rows: ', rows)
         return rows;
