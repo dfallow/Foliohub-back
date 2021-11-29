@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const passport = require('./utils/pass');
+const flash = require('connect-flash');
 const projectRoute = require('./routes/projectRoute');
 const userRoute = require('./routes/userRoute');
 const authRoute = require('./routes/authRoute');
@@ -13,12 +14,13 @@ const port = 3001;
 
 app.use(cors());
 app.use(passport.initialize());
+app.use(flash());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/auth', authRoute);
-app.use('/project', passport.authenticate('jwt', {session: false}), projectRoute);
+app.use('/project', projectRoute);
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 
 app.use((req, res, next) => {
