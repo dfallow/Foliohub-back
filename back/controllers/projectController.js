@@ -4,7 +4,7 @@
 const {getAllProjects, getProject, deleteProject, insertProject, updateProject} = require("../models/projectModel");
 
 const project_list_get = async (req, res) => {
-    const projects = await getAllProjects()
+    const projects = await getAllProjects(req.user)
     console.log('all projects', projects);
     res.json(projects);
 }
@@ -17,6 +17,7 @@ const project_get = async (req, res) => {
 const project_post = async (req, res) => {
     try {
         console.log('project post req.body', req.body);
+        req.body.author = req.user.userId;
         const id = await insertProject(req.body);
         res.json({message: `Project added with id ${id}`})
     } catch (e) {
@@ -32,7 +33,8 @@ const project_delete = async (req, res) => {
 
 const project_update = async (req, res) => {
     req.body.id = req.params.id;
-    const updated = await updateProject(req.body)
+    req.body.author = req.body.author || req.user.userId;
+    const updated = await updateProject(req.body, req.user.role)
     res.send(`project updated ${updated}`)
 }
 
@@ -43,4 +45,3 @@ module.exports = {
     project_delete,
     project_update,
 }
-
