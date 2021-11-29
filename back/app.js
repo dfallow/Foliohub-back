@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/auth', authRoute);
-app.use('/project', projectRoute);
+app.use('/project', passport.authenticate('jwt', {session: false}), projectRoute);
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 
 app.use((req, res, next) => {

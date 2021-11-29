@@ -4,7 +4,7 @@
 const {getAllProjects, getProject, deleteProject, insertProject, updateProject} = require("../models/projectModel");
 
 const project_list_get = async (req, res) => {
-    console.log('Req user', req.body);
+    console.log('Req user', req.user);
     const projects = await getAllProjects(req.user)
     console.log('all projects', projects);
     res.json(projects);
