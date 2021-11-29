@@ -16,7 +16,6 @@ const login = (req, res, next) => {
                 return;
             }
             const token = jwt.sign(user, 'asdhjfkljeklwnflhldls');
-            passUser(user);
             return res.json({ user, token });
         });
     })(req, res, next);
@@ -27,15 +26,8 @@ const logout = (req, res) => {
     res.json({message: 'logout'});
 };
 
-function passUser(user) {
-    return function (req, res, next) {
-        req.user = user;
-        next();
-    }
-}
 
 module.exports = {
     login,
     logout,
-    passUser,
 };

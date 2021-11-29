@@ -13,6 +13,4 @@ router.route('/:id')
     .delete(user_delete)
     .put(user_update)
 
-router.get('/token', checkToken);
-
 module.exports = router;
