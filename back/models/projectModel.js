@@ -10,7 +10,7 @@ const getAllProjects = async (user) => {
         const publicQuery = 'SELECT * FROM projects WHERE private = 0';
         const adminQuery = 'SELECT * FROM projects';
         const userQuery = 'SELECT * FROM projects AS p INNER JOIN users AS u on p.author = u.userId'
-        const testQuery = 'SELECT * FROM projects INNER JOIN users ON author = userId WHERE private = 0 OR author = ?'
+        const testQuery = 'SELECT * FROM projects WHERE private = 0 OR author = ?'
 
         let params = [];
 
