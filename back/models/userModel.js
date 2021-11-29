@@ -26,8 +26,8 @@ const getUser = async (userId) => {
 
 const insertUser = async (user) => {
     try {
-        const query = 'INSERT INTO users(username, email, title, creationDate, github, description, tags, profilePic) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-        const params = [user.username, user.email, user.title, user.creationDate, user.github, user.description, user.tags, user.profilePic];
+        const query = 'INSERT INTO users(username, password, email, title, creationDate, github, description, tags, profilePic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        const params = [user.username, user.password, user.email, user.title, user.creationDate, user.github, user.description, user.tags, user.profilePic];
         const [rows] = await promisePool.query(query, params);
         console.log('model insert User', rows);
         return rows.affectedRows === 1;
@@ -59,10 +59,23 @@ const deleteUser = async (user) => {
     }
 }
 
+const getUserLogin = async (params) => {
+    try {
+        console.log(params);
+        const [rows] = await promisePool.execute(
+            'SELECT * FROM users WHERE email = ?;',
+            params);
+        return rows;
+    } catch (e) {
+        console.log('error', e.message);
+    }
+};
+
 module.exports = {
     getAllUsers,
     getUser,
     insertUser,
     updateUser,
     deleteUser,
+    getUserLogin,
 }
