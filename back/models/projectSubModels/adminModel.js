@@ -39,7 +39,7 @@ const insertProjectAdmin = async (project) => {
 
 const updateProjectAdmin = async (project) => {
     try {
-        let sql = 'UPDATE projects SET name = ?, date = ?, description = ?, video = ?, images = ?, outline = ?, logo = ?, tags = ?, private WHERE id = ?'
+        let sql = 'UPDATE projects SET name = ?, date = ?, description = ?, video = ?, images = ?, outline = ?, logo = ?, tags = ?, private = ? WHERE id = ?'
         let params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.private, project.id];
         const [rows] = await promisePool.query(sql, params);
         console.log('update project admin', rows)
