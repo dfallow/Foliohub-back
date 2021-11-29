@@ -29,8 +29,8 @@ const project_delete_admin = async (req, res) => {
     const projectDeleted = await deleteProjectAdmin(req.body);
     res.json({message: 'project deleted successfully ' + projectDeleted});
 }
-
 const project_update_admin = async (req, res) => {
+    req.body.id = req.params.id;
     const updated = await updateProjectAdmin(req.body);
     res.send(`project updated ${updated}`);
 }
