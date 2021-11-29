@@ -42,45 +42,45 @@ const getProject = async (projectId) => {
     }
 };
 
-const insertProject = async (project) => {
-    try {
-        const query = 'INSERT INTO projects(name, date, description, video, images, outline, logo, tags, author, private) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        const params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.author, project.private];
-        const [rows] = await promisePool.query(query, params);
-        console.log('model insert Project', rows);
-        return rows.affectedRows === 1;
-    } catch (e) {
-        console.error('model insert Project', e.message);
-    }
-}
+// const insertProject = async (project) => {
+//     try {
+//         const query = 'INSERT INTO projects(name, date, description, video, images, outline, logo, tags, author, private) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+//         const params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.author, project.private];
+//         const [rows] = await promisePool.query(query, params);
+//         console.log('model insert Project', rows);
+//         return rows.affectedRows === 1;
+//     } catch (e) {
+//         console.error('model insert Project', e.message);
+//     }
+// }
 
-const updateProject = async (project) => {
-    try {
-        let sql = 'UPDATE projects SET name = ?, date = ?, description = ?, video = ?, images = ?, outline = ?, logo = ?, tags = ? WHERE id = ?'
-        let params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.id];
-        const [rows] = await promisePool.query(sql, params);
-        console.log('project updated', rows)
-        return rows.affectedRows === 1;
-    } catch (e) {
-        console.error('error', e.message);
-    }
-}
-
-const deleteProject = async (project) => {
-    try {
-        let sql = 'DELETE FROM projects WHERE id = ?';
-        let params = [project.id];
-        const [row] = await promisePool.query(sql, params);
-        return row.affectedRows === 1;
-    } catch (e) {
-        console.error('delete project error', e.message);
-    }
-}
+// const updateProject = async (project) => {
+//     try {
+//         let sql = 'UPDATE projects SET name = ?, date = ?, description = ?, video = ?, images = ?, outline = ?, logo = ?, tags = ? WHERE id = ?'
+//         let params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.id];
+//         const [rows] = await promisePool.query(sql, params);
+//         console.log('project updated', rows)
+//         return rows.affectedRows === 1;
+//     } catch (e) {
+//         console.error('error', e.message);
+//     }
+// }
+//
+// const deleteProject = async (project) => {
+//     try {
+//         let sql = 'DELETE FROM projects WHERE id = ?';
+//         let params = [project.id];
+//         const [row] = await promisePool.query(sql, params);
+//         return row.affectedRows === 1;
+//     } catch (e) {
+//         console.error('delete project error', e.message);
+//     }
+// }
 
 module.exports = {
     getAllProjects,
     getProject,
-    insertProject,
-    deleteProject,
-    updateProject,
+    // insertProject,
+    // deleteProject,
+    // updateProject,
 }
