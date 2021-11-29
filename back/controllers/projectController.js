@@ -4,8 +4,7 @@
 const {getAllProjects, getProject, deleteProject, insertProject, updateProject} = require("../models/projectModel");
 
 const project_list_get = async (req, res) => {
-    console.log('Req flash role: ', req.flash('role'));
-    req.user.role = req.flash('role');
+    console.log('req user:', req.user);
     const projects = await getAllProjects(req.user)
     console.log('all projects', projects);
     res.json(projects);

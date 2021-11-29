@@ -1,8 +1,7 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const flash = require('connect-flash');
-const {httpError} = require('../utils/errors')
+const {httpError} = require('../utils/errors');
 
 const login = (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
@@ -17,7 +16,7 @@ const login = (req, res, next) => {
                 return;
             }
             const token = jwt.sign(user, 'asdhjfkljeklwnflhldls');
-            req.flash('role', user.role);
+            passUser(user);
             return res.json({ user, token });
         });
     })(req, res, next);
@@ -28,7 +27,15 @@ const logout = (req, res) => {
     res.json({message: 'logout'});
 };
 
+function passUser(user) {
+    return function (req, res, next) {
+        req.user = user;
+        next();
+    }
+}
+
 module.exports = {
     login,
     logout,
+    passUser,
 };
