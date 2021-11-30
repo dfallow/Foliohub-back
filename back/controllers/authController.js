@@ -16,8 +16,7 @@ const login = (req, res, next) => {
                 return;
             }
             const token = jwt.sign(user, 'asdhjfkljeklwnflhldls');
-            return res.json({ user, token }, res.redirect('/~public/foliohub-front/html/home.html'));
-            // return res.redirect();
+            return res.json({ user, token });
         });
     })(req, res, next);
 };
