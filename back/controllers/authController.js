@@ -16,7 +16,8 @@ const login = (req, res, next) => {
                 return;
             }
             const token = jwt.sign(user, 'asdhjfkljeklwnflhldls');
-            return res.json({ user, token });
+            return res.json({ user, token }, res.redirect('/project'));
+            // return res.redirect();
         });
     })(req, res, next);
 };
