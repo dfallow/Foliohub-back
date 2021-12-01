@@ -27,7 +27,7 @@ passport.use(new Strategy(async (username, password, done) => {
 
 passport.use(new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-        secretOrKey   : 'asdhjfkljeklwnflhldls'
+        secretOrKey   : process.env.JWT_SECRET
     }, (jwtPayload, done) => {
         console.log('jwtpayload', jwtPayload);
         return done(null, jwtPayload);
