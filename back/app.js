@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/auth', authRoute);
 app.use('/project', projectRoute);
-app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
+app.use('/user', userRoute);
 
 app.use((req, res, next) => {
     const err = httpError('Not found', 404);

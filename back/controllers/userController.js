@@ -18,13 +18,13 @@ const user_post = async (req, res) => {
 }
 
 const user_delete = async (req , res) => {
-    req.body.userId = req.params.id;
+    req.body.userId = req.user.userId;
     await deleteUser(req.body);
     res.send('User deleted');
 }
 
 const user_update = async (req, res) => {
-    req.body.userId = req.params.id;
+    req.body.userId = req.user.userId;
     const updated = await updateUser(req.body)
     res.send(`User updated ${updated}`);
 }
