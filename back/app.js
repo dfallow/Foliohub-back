@@ -14,6 +14,9 @@ const port = 3001;
 app.use(cors());
 app.use(passport.initialize());
 
+app.use('/uploads', express.static('uploads'));
+//app.use('/thumbnails', express.static('thumbnails'));
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
