@@ -24,10 +24,10 @@ const getUser = async (userId) => {
     }
 };
 
-const insertUser = async (user) => {
+const insertUser = async (user, file) => {
     try {
         const query = 'INSERT INTO users(username, password, email, title, creationDate, github, description, tags, profilePic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        const params = [user.username, user.password, user.email, user.title, user.creationDate, user.github, user.description, user.tags, user.profilePic];
+        const params = [user.username, user.password, user.email, user.title, user.creationDate, user.github, user.description, user.tags, file.filename];
         const [rows] = await promisePool.query(query, params);
         console.log('model insert User', rows);
         return rows.affectedRows === 1;
