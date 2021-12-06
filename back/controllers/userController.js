@@ -13,18 +13,19 @@ const user_get = async (req, res) => {
 
 const user_post = async (req, res) => {
     console.log('add user data ', req.body);
+    console.log('profile pic ', req.file);
     const id = await insertUser(req.body);
     res.send(id);
 }
 
 const user_delete = async (req , res) => {
-    req.body.userId = req.params.id;
+    req.body.userId = req.user.userId;
     await deleteUser(req.body);
     res.send('User deleted');
 }
 
 const user_update = async (req, res) => {
-    req.body.userId = req.params.id;
+    req.body.userId = req.user.userId;
     const updated = await updateUser(req.body)
     res.send(`User updated ${updated}`);
 }

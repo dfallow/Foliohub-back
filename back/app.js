@@ -14,12 +14,15 @@ const port = 3001;
 app.use(cors());
 app.use(passport.initialize());
 
+app.use('/uploads', express.static('uploads'));
+//app.use('/thumbnails', express.static('thumbnails'));
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/auth', authRoute);
 app.use('/project', projectRoute);
-app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
+app.use('/user', userRoute);
 
 app.use((req, res, next) => {
     const err = httpError('Not found', 404);

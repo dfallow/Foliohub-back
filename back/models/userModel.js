@@ -5,7 +5,7 @@ const promisePool = pool.promise();
 
 const getAllUsers = async () => {
     try {
-        const query = 'SELECT * FROM users'
+        const query = 'SELECT * FROM users WHERE NOT role = 1'
         const [rows] = await promisePool.query(query);
         console.log('getAllUsers rows: ', rows)
         return rows;
@@ -16,7 +16,7 @@ const getAllUsers = async () => {
 
 const getUser = async (userId) => {
     try {
-        const query = 'SELECT * FROM users WHERE userId = ?'
+        const query = 'SELECT * FROM users WHERE userId = ? AND NOT role = 1'
         const [rows] = await promisePool.query(query, [userId]);
         return rows[0];
     } catch (e) {
