@@ -25,8 +25,9 @@ const user_delete = async (req , res) => {
 }
 
 const user_update = async (req, res) => {
+    console.log('req.body', req.body);
     req.body.userId = req.user.userId;
-    const updated = await updateUser(req.body)
+    const updated = await updateUser(req.body, req.file)
     res.send(`User updated ${updated}`);
 }
 

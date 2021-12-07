@@ -12,7 +12,10 @@ router.route('/')
     .post(
         upload.single('profilePic'),
         user_post)
-    .put(passport.authenticate('jwt', {session: false}), user_update)
+    .put(
+        passport.authenticate('jwt', {session: false}),
+        upload.single('profilePic'),
+        user_update)
     .delete(passport.authenticate('jwt', {session: false}), user_delete)
 
 router.route('/:id')
