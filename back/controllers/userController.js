@@ -9,7 +9,7 @@ const user_list_get = async (req, res) => {
 const user_get = async (req, res) => {
     const user = await getUser(req.params.id)
     res.json(user);
-}
+};
 
 const user_post = async (req, res) => {
     console.log('add user data ', req.body);
@@ -17,6 +17,11 @@ const user_post = async (req, res) => {
     const id = await insertUser(req.body);
     res.send(id);
 }
+
+//const cat = req.body;
+//cat.filename = req.file.filename;
+//const id = await insertCat(req.body, req.file);
+//res.json({message: `Cat added with id ${id}`, cat_id: id});
 
 const user_delete = async (req , res) => {
     req.body.userId = req.user.userId;
