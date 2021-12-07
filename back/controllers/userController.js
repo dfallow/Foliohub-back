@@ -14,7 +14,7 @@ const user_get = async (req, res) => {
 const user_post = async (req, res) => {
     console.log('add user data ', req.body);
     console.log('profile pic ', req.file);
-    const id = await insertUser(req.body);
+    const id = await insertUser(req.body, req.file);
     res.send(id);
 }
 
