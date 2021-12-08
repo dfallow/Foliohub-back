@@ -16,8 +16,14 @@ const project_get_personal = async (req, res) => {
 const project_post_personal = async (req, res) => {
     try {
         console.log('project post req.body', req.body);
+        const logo = req.files.logo[0];
+        const images = [];
+        for (let file of req.files.images) {
+            images.push(file.filename);
+        }
+        const imagesString = images.toString();
         req.body.author = req.user.userId;
-        const id = await insertProjectPersonal(req.body);
+        const id = await insertProjectPersonal(req.body, imagesString, logo);
         res.json({message: `Project added with id ${id}`})
     } catch (e) {
         console.error('project posting', e.message)
