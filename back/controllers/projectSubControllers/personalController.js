@@ -30,18 +30,31 @@ const project_post_personal = async (req, res) => {
     }
 }
 
+const project_update_personal = async (req, res) => {
+    try {
+        const logo = req.files.logo[0].filename;
+        const images = [];
+        for (let file of req.files.images) {
+            images.push(file.filename);
+        }
+        const imagesString = images.toString();
+        console.log('image string', imagesString)
+        req.body.id = req.params.id;
+        req.body.author = req.body.author || req.user.userId;
+        const updated = await updateProjectPersonal(req.body, req.user, imagesString, logo);
+        res.send(`project updated ${updated}`)
+    } catch (e) {
+        console.error('project updating', e.message)
+    }
+}
+
 const project_delete_personal = async (req, res) => {
     req.body.id = req.params.id;
     const projectDeleted = await deleteProjectPersonal(req.body, req.user);
     res.json({message: 'project deleted successfully ' + projectDeleted});
 }
 
-const project_update_personal = async (req, res) => {
-    req.body.id = req.params.id;
-    req.body.author = req.body.author || req.user.userId;
-    const updated = await updateProjectPersonal(req.body, req.user);
-    res.send(`project updated ${updated}`)
-}
+
 
 module.exports = {
     project_list_get_personal,

@@ -19,6 +19,12 @@ router.route('/')
 router.route('/:id')
     .get(project_get_personal)
     .delete(project_delete_personal)
-    .put(project_update_personal)
+    .put(
+        upload.fields([{
+            name: 'logo', maxCount: 1
+        }, {
+            name: 'images', maxCount: 6
+        }]),
+        project_update_personal)
 
 module.exports = router;
