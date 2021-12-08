@@ -18,17 +18,17 @@ const getAllProjectsPersonal = async (user) => {
 const getProjectPersonal = async (projectId, user) => {
     try {
         const query = 'SELECT * FROM projects WHERE id = ? AND author = ?'
-        const [rows] = await promisePool.query(query, [projectId], user.userId);
+        const [rows] = await promisePool.query(query, [projectId, user.userId]);
         return rows[0];
     } catch (e) {
         console.error('getProject query', e.message);
     }
 };
 
-const insertProjectPersonal = async (project) => {
+const insertProjectPersonal = async (project, images, logo) => {
     try {
         const query = 'INSERT INTO projects(name, date, description, video, images, outline, logo, tags, author, private) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        const params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.author, project.private];
+        const params = [project.name, project.date, project.description, project.video, images, project.outline, logo.filename, project.tags, project.author, project.private];
         const [rows] = await promisePool.query(query, params);
         console.log('insert project personal', rows);
         return rows.affectedRows === 1;
@@ -37,10 +37,10 @@ const insertProjectPersonal = async (project) => {
     }
 }
 
-const updateProjectPersonal = async (project, user) => {
+const updateProjectPersonal = async (project, user, images, logo) => {
     try {
-        let sql = 'UPDATE projects SET name = ?, date = ?, description = ?, video = ?, images = ?, outline = ?, logo = ?, tags = ?, private = ? WHERE id = ? AND author = ?'
-        let params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.private, project.id, user.userId];
+        let sql = 'UPDATE projects SET name = ?, description = ?, video = ?, images = ?, outline = ?, logo = ?, tags = ?, private = ? WHERE id = ? AND author = ?'
+        let params = [project.name ,project.description, project.video, images, project.outline, logo, project.tags, project.private, project.id, user.userId];
         const [rows] = await promisePool.query(sql, params);
         console.log('update project personal', rows)
         return rows.affectedRows === 1;

@@ -16,7 +16,7 @@ const getAllUsers = async () => {
 
 const getUser = async (userId) => {
     try {
-        const query = 'SELECT * FROM users WHERE userId = ? AND NOT role = 1'
+        const query = 'SELECT userId, username, email, title, creationDate, github, description, tags, profilePic, role FROM users WHERE userId = ? AND NOT role = 1'
         const [rows] = await promisePool.query(query, [userId]);
         return rows[0];
     } catch (e) {
@@ -36,13 +36,18 @@ const insertUser = async (user, file) => {
     }
 }
 
-const updateUser = async (user) => {
+const updateUser = async (user, file) => {
     try {
-        let sql = 'UPDATE users SET username = ?, email = ?, title = ?, creationDate = ?, github = ?, description = ?, tags = ?, profilePic = ? WHERE userId = ?'
-        let params = [user.username, user.email, user.title, user.creationDate, user.github, user.description, user.tags, user.profilePic, user.userId];
+        let sql = 'UPDATE users SET username = ?, title = ?, github = ?, description = ?, tags = ?, profilePic = ? WHERE userId = ?'
+        let params = [user.username, user.title, user.github, user.description, user.tags, file.filename, user.userId];
+        if (!file) {
+            sql = 'UPDATE users SET username = ?, title = ?, github = ?, description = ?, tags = ? WHERE userId = ?'
+            params = [user.username, user.title, user.github, user.description, user.tags, user.userId];
+        }
         const [rows] = await promisePool.query(sql, params);
-        console.log('user updated', rows)
-        return rows.affectedRows === 1;
+        const userInfo = await getUser(user.userId);
+        console.log('user updated', rows);
+        return userInfo;
     } catch (e) {
         console.error('error', e.message);
     }
