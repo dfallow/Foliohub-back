@@ -5,7 +5,7 @@ const promisePool = pool.promise();
 
 const getAllProjectsPersonal = async (user) => {
     try {
-        const sql = 'SELECT * FROM projects WHERE private = 0 OR author = ?'
+        const sql = 'SELECT * FROM projects WHERE private = 0 OR author = ? ORDER BY date DESC'
         let params = [user.userId];
         const [rows] = await promisePool.query(sql, params);
         console.log('getAllProjectsPersonal: ', rows)
