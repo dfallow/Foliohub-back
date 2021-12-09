@@ -38,11 +38,14 @@ const insertUser = async (user, file) => {
 
 const updateUser = async (user, file) => {
     try {
-        let sql = 'UPDATE users SET username = ?, title = ?, github = ?, description = ?, tags = ?, profilePic = ? WHERE userId = ?'
-        let params = [user.username, user.title, user.github, user.description, user.tags, file.filename, user.userId];
+        let sql;
+        let params;
         if (!file) {
             sql = 'UPDATE users SET username = ?, title = ?, github = ?, description = ?, tags = ? WHERE userId = ?'
             params = [user.username, user.title, user.github, user.description, user.tags, user.userId];
+        } else {
+            sql = 'UPDATE users SET username = ?, title = ?, github = ?, description = ?, tags = ?, profilePic = ? WHERE userId = ?'
+            params = [user.username, user.title, user.github, user.description, user.tags, file.filename, user.userId];
         }
         const [rows] = await promisePool.query(sql, params);
         const userInfo = await getUser(user.userId);
