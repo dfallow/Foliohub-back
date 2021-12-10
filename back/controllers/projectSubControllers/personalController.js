@@ -1,6 +1,12 @@
 'use strict';
 
-const {getAllProjectsPersonal, insertProjectPersonal, deleteProjectPersonal, updateProjectPersonal, getProjectPersonal} = require("../../models/projectSubModels/personalModel");
+const {
+    getAllProjectsPersonal,
+    insertProjectPersonal,
+    deleteProjectPersonal,
+    updateProjectPersonal,
+    getProjectPersonal
+} = require("../../models/projectSubModels/personalModel");
 
 const project_list_get_personal = async (req, res) => {
     const projects = await getAllProjectsPersonal(req.user);
@@ -16,12 +22,21 @@ const project_get_personal = async (req, res) => {
 const project_post_personal = async (req, res) => {
     try {
         console.log('project post req.body', req.body);
-        const logo = req.files.logo[0];
-        const images = [];
-        for (let file of req.files.images) {
-            images.push(file.filename);
+        let logo;
+        let images;
+        let imagesString;
+
+        if (req.files.logo) {
+            logo = req.files.logo[0].filename;
         }
-        const imagesString = images.toString();
+
+        if (req.files.images) {
+            images = [];
+            for (let file of req.files.images) {
+                images.push(file.filename);
+            }
+            imagesString = images.toString();
+        }
         req.body.author = req.user.userId;
         const id = await insertProjectPersonal(req.body, imagesString, logo);
         res.json({message: `Project added with id ${id}`})
@@ -53,7 +68,6 @@ const project_delete_personal = async (req, res) => {
     const projectDeleted = await deleteProjectPersonal(req.body, req.user);
     res.json({message: 'project deleted successfully ' + projectDeleted});
 }
-
 
 
 module.exports = {
