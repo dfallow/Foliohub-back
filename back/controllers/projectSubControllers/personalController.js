@@ -39,7 +39,7 @@ const project_post_personal = async (req, res) => {
         }
         req.body.author = req.user.userId;
         const id = await insertProjectPersonal(req.body, imagesString, logo);
-        res.json({message: `Project added with id ${id}`})
+        res.json({message: `Project added ${id}`})
     } catch (e) {
         console.error('project posting', e.message)
     }

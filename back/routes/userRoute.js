@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express');
 const passport = require('../utils/pass');
+const commentsRoute = require('./projectSubRoutes/commentsRoute');
 const {user_list_get, user_post, user_get, user_delete, user_update, checkToken} = require("../controllers/userController");
 const router = express.Router();
 const {body} = require('express-validator');
@@ -45,7 +46,5 @@ router.route('/')
 
 router.route('/:id')
     .get(user_get)
-
-
 
 module.exports = router;
