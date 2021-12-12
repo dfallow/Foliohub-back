@@ -5,7 +5,10 @@ const promisePool = pool.promise();
 
 const getAllProjectComments = async (projectId) => {
     try {
-        const sql = 'SELECT * FROM writes_about WHERE projectId = ? ORDER BY timestamp DESC';
+        const sql = `SELECT writes_about.*, users.username
+                     FROM writes_about LEFT JOIN users ON writes_about.userId = users.userId
+                     WHERE projectId = ? ORDER BY timestamp DESC`;
+        // const sql = 'SELECT * FROM writes_about WHERE projectId = ? ORDER BY timestamp DESC';
         const [rows] = await promisePool.query(sql, [projectId]);
         console.log('getALlProjectComments: ', rows);
         return rows;
