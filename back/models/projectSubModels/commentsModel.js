@@ -5,7 +5,9 @@ const promisePool = pool.promise();
 
 const getAllProjectComments = async (projectId) => {
     try {
-        const sql = 'SELECT * FROM writes_about WHERE projectId = ? ORDER BY timestamp DESC';
+        const sql = 'SELECT writes_about.*, users.username\n' +
+            '                     FROM writes_about LEFT JOIN users ON writes_about.userId = users.userId\n' +
+            '                     WHERE projectId = ? ORDER BY timestamp DESC;';
         const [rows] = await promisePool.query(sql, [projectId]);
         console.log('getALlProjectComments: ', rows);
         return rows;
@@ -16,8 +18,8 @@ const getAllProjectComments = async (projectId) => {
 
 const insertProjectComment = async (comment) => {
     try {
-        const query = 'INSERT INTO writes_about(userId, projectId, comment, timeStamp) VALUES (?, ?, ?, ?)';
-        const params = [comment.userId, comment.projectId, comment.comment, comment.timeStamp];
+        const query = 'INSERT INTO writes_about(userId, userName, projectId, comment, timeStamp) VALUES (?, ?, ?, ?, ?)';
+        const params = [comment.userId, comment.userName, comment.projectId, comment.comment, comment.timeStamp];
         const [rows] = await promisePool.query(query, params);
         console.log('insert project comment', rows);
         return rows.affectedRows === 1;
