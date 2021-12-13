@@ -22,10 +22,10 @@ const project_post_comment = async (req, res) => {
 }
 
 const project_delete_comment = async (req, res) => {
-    req.body.commentId = req.params.id;
     console.log(req.user);
+    console.log(req.body);
     const commentDeleted = await deleteProjectComment(req.body, req.user);
-    res.json({message: 'project comment deleted successfully' + commentDeleted});
+    res.json({message: 'project comment deleted successfully ' + commentDeleted});
 }
 
 module.exports = {

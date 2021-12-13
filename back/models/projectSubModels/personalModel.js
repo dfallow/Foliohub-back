@@ -27,8 +27,8 @@ const getProjectPersonal = async (projectId, user) => {
 
 const insertProjectPersonal = async (project, images, logo) => {
     try {
-        const query = 'INSERT INTO projects(name, date, description, video, images, outline, logo, tags, author, private) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        const params = [project.name, project.date, project.description, project.video, images, project.outline, logo, project.tags, project.author, project.private];
+        const query = 'INSERT INTO projects(name, description, video, images, outline, logo, tags, author, private) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        const params = [project.name, project.description, project.video, images, project.outline, logo, project.tags, project.author, project.private];
         const [rows] = await promisePool.query(query, params);
         console.log('insert project personal', rows);
         return rows.affectedRows === 1;

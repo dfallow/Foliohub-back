@@ -29,11 +29,11 @@ const insertUser = async (user, file) => {
         let sql;
         let params;
         if (!file) {
-            sql = 'INSERT INTO users(username, password, email, title, creationDate, github, description, tags) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-            params = [user.username, user.password, user.email, user.title, user.creationDate, user.github, user.description, user.tags];
+            sql = 'INSERT INTO users(username, password, email, title, github, description, tags) VALUES (?, ?, ?, ?, ?, ?, ?)'
+            params = [user.username, user.password, user.email, user.title, user.github, user.description, user.tags];
         } else {
-            sql = 'INSERT INTO users(username, password, email, title, creationDate, github, description, tags, profilePic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-            params = [user.username, user.password, user.email, user.title, user.creationDate, user.github, user.description, user.tags, file.filename];
+            sql = 'INSERT INTO users(username, password, email, title, github, description, tags, profilePic) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+            params = [user.username, user.password, user.email, user.title, user.github, user.description, user.tags, file.filename];
         }
         const [rows] = await promisePool.query(sql, params);
         console.log('model insert User', rows);

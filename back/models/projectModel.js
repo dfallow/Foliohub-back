@@ -5,7 +5,7 @@ const promisePool = pool.promise();
 
 const getAllProjects = async () => {
     try {
-        const query = 'SELECT * FROM projects WHERE private = 0';
+        const query = 'SELECT * FROM projects WHERE private = 0 ORDER BY date DESC';
         const [rows] = await promisePool.query(query);
         console.log('getAllProjects rows: ', rows)
         return rows;
