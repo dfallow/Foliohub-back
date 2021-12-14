@@ -5,7 +5,24 @@ const promisePool = pool.promise();
 
 const getAllProjectsPersonal = async (user) => {
     try {
-        const sql = 'SELECT * FROM projects WHERE private = 0 OR author = ? ORDER BY date DESC'
+        const sql = `
+                    SELECT 
+                      p.*,
+                      IFNULL(w.commentCount, 0) AS comments,
+                      IFNULL(r.ratingSum, 0) AS rating
+                    FROM projects AS p
+                    LEFT JOIN (
+                      SELECT projectId, COUNT(commentId) AS commentCount
+                      FROM writes_about as w
+                      GROUP BY projectId
+                    ) w ON (p.id = w.projectId)
+                    LEFT JOIN (
+                      SELECT projectId, SUM(rating) AS ratingSum
+                      FROM gives_rating_to_project AS r
+                      GROUP BY projectId
+                    ) r ON (p.id = r.projectId) 
+                    WHERE p.private = 0 OR p.author = ?
+                    ORDER BY date DESC;`
         let params = [user.userId];
         const [rows] = await promisePool.query(sql, params);
         console.log('getAllProjectsPersonal: ', rows)
