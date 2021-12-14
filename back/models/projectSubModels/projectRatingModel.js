@@ -5,10 +5,10 @@ const promisePool = pool.promise();
 
 const getProjectRating = async (projectId) => {
     try {
-        const sql = `SELECT SUM(rating) FROM gives_rating_to_project WHERE projectId = ?`;
+        const sql = `SELECT SUM(rating) as rating FROM gives_rating_to_project WHERE projectId = ?`;
         const [rows] = await promisePool.query(sql, [projectId]);
-        console.log('getProjectRating', rows);
-        return rows;
+        console.log('getProjectRating', rows[0]);
+        return rows[0];
     } catch (e) {
         console.error('getProjectRating query error: ', e.message);
     }
