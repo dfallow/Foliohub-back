@@ -47,12 +47,20 @@ const project_post_personal = async (req, res) => {
 
 const project_update_personal = async (req, res) => {
     try {
-        const logo = req.files.logo[0].filename;
-        const images = [];
-        for (let file of req.files.images) {
-            images.push(file.filename);
+        let logo;
+        let images;
+        let imagesString;
+        if (req.files.logo) {
+            logo = req.files.logo[0].filename;
         }
-        const imagesString = images.toString();
+
+        if (req.files.images) {
+            images = [];
+            for (let file of req.files.images) {
+                images.push(file.filename);
+            }
+            imagesString = images.toString();
+        }
         console.log('image string', imagesString)
         req.body.id = req.params.id;
         req.body.author = req.body.author || req.user.userId;
