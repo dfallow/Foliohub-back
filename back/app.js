@@ -11,6 +11,21 @@ const { httpError } = require('./utils/errors');
 const app = express();
 const port = 3001;
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+if (process.env.NODE_ENV === 'production') {
+    require('./utils/production')(app, port);
+} else {
+    require('./utils/localhost')(app,8000, port);
+}
+
+app.get('/', (req, res) => {
+    if (req.secure) {
+        res.send('HELLO SECURE WORLD');
+    } else {
+        res.send('not secured');
+    }
+});
+
 app.use(cors());
 app.use(passport.initialize());
 
@@ -29,4 +44,4 @@ app.use((req, res, next) => {
     next(err);
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}! http://localhost:${port}`));
+//app.listen(port, () => console.log(`Example app listening on port ${port}! http://localhost:${port}`));
