@@ -2,7 +2,7 @@
 
 const {getAllUsers, getUser, insertUser, deleteUser, updateUser} = require("../models/userModel");
 const {makeThumbnail} = require("../utils/resize");
-const {removeFile} = require("../utils/removeFile");
+const {removeFile, removeFiles} = require("../utils/removeFile");
 const user_list_get = async (req, res) => {
     const users = await getAllUsers();
     res.json(users);
@@ -17,11 +17,12 @@ const user_post = async (req, res) => {
     console.log('add user data ', req.body);
     console.log('profile pic ', req.file);
     try {
-        const thumb = await makeThumbnail(req.file.path, './thumbnails/user/', req.file.filename);
-        const id = await insertUser(req.body, req.file);
-        if (thumb) {
-            res.json( { message: `User added successfully ${id}` } );
+        if (req.file) {
+            const thumb = await makeThumbnail(req.file.path, './thumbnails/user/', req.file.filename);
+            console.log('added ' + await thumb);
         }
+        const id = await insertUser(req.body, req.file);
+        res.json( { message: `User added successfully ${id}` } );
     } catch (e) {
         console.log(e.message)
     }
@@ -29,6 +30,13 @@ const user_post = async (req, res) => {
 
 const user_delete = async (req , res) => {
     req.body.userId = req.user.userId;
+    try {
+        const user = await getUser(req.user.userId);
+        const removed = await removeFile('./uploads/user/', './thumbnails/user/', user.profilePic);
+        console.log('profilePic removed: ' + removed);
+    } catch (e) {
+        console.error(e)
+    }
     await deleteUser(req.body);
     res.send('User deleted');
 }

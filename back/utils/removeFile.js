@@ -11,13 +11,14 @@ const removeFile = async (pathToDirUpload, pathToDirThumb, filename) => {
     }
 }
 
-const removeFiles = async (pathToDirUpload, pathToDirThumb, filenames) => {
+const removeFiles = async (pathToDirUpload, filenames) => {
     try {
+        const files = [];
         filenames.forEach((name) => {
             fs.unlinkSync(pathToDirUpload + name);
-            fs.unlinkSync(pathToDirThumb + name);
+            files.push(pathToDirUpload + name);
         })
-        return filenames;
+        return files;
     } catch (e) {
         console.error(e);
     }
