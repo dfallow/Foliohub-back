@@ -4,10 +4,12 @@
 
 #### Login
 
-`POST /auth/login`
-
-> `Content-type: application/json`
-
+```http
+    POST /auth/login
+```
+```http
+    Content-type: application/json`
+```
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `username` | `email` | **Required** |
