@@ -292,11 +292,14 @@ $RECYCLE.BIN/
 # ignore content of uploads folder
 */uploads/user/*
 */uploads/project/*
-*/thumbnails/*
+*/thumbnails/user/*
+*/thumbnails/project/*
 # except one (empty) file to have the folder in version control
 !*/uploads/.gitkeep
 !*/uploads/user/.gitkeep
 !*/uploads/project/.gitkeep
 !*/thumbnails/.gitkeep
+!*/thumbnails/user/.gitkeep
+!*/thumbnails/project/.gitkeep
 /.idea/modules.xml
 /.idea/vcs.xml
