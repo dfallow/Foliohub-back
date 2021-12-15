@@ -4,7 +4,7 @@
 
 #### Login
 
-´POST /auth/login´
+`POST /auth/login`
 
 > Content-type: application/json
 
