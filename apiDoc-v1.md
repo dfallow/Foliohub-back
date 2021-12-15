@@ -4,13 +4,9 @@
 
 #### Login
 
-´´´http
-    POST /auth/login
-´´´
+> POST /auth/login
 
-´´´http
-    Content-type: application/json
-´´´
+> Content-type: application/json
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
