@@ -23,7 +23,7 @@ const login = (req, res, next) => {
 
 const logout = (req, res) => {
     req.logout();
-    res.json({message: 'logout'});
+    res.json({message: 'logged out'});
 };
 
 

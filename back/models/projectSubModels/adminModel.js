@@ -31,7 +31,7 @@ const insertProjectAdmin = async (project) => {
         const params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.author, project.private];
         const [rows] = await promisePool.query(query, params);
         console.log('insert project admin', rows);
-        return rows.affectedRows === 1;
+        return rows.insertId;
     } catch (e) {
         console.error('insert project admin query', e.message);
     }

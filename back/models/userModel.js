@@ -37,7 +37,7 @@ const insertUser = async (user, file) => {
         }
         const [rows] = await promisePool.query(sql, params);
         console.log('model insert User', rows);
-        return rows.affectedRows === 1;
+        return {"message:": "User created with id: " + rows.insertId};
     } catch (e) {
         console.error('model insert User', e.message);
     }
@@ -57,7 +57,7 @@ const updateUser = async (user, file) => {
         const [rows] = await promisePool.query(sql, params);
         const userInfo = await getUser(user.userId);
         console.log('user updated', rows);
-        return userInfo;
+        return {"message": "User updated with id: " + JSON.stringify(userInfo.userId)};
     } catch (e) {
         console.error('error', e.message);
     }
@@ -68,7 +68,8 @@ const deleteUser = async (user) => {
         let sql = 'DELETE FROM users WHERE userId = ?';
         let params = [user.userId];
         const [row] = await promisePool.query(sql, params);
-        return row.affectedRows === 1;
+        console.log('user deleted: ', row);
+        return {"message": "User deleted"};
     } catch (e) {
         console.error('delete user error', e.message);
     }

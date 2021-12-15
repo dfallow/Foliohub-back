@@ -36,7 +36,7 @@ const project_rating_update = async (req, res) => {
         req.body.projectId = req.params.projectId;
         console.log('req.body', req.body);
         const updated = await updateProjectRating(req.body, req.user);
-        res.send(`project rating updated ${updated}`);
+        res.json({message: `project rating updated ${updated}`});
     } catch (e) {
         console.error('project rating updating', e.message);
     }

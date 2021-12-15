@@ -1,7 +1,6 @@
 'use strict';
 const express = require('express');
 const passport = require('../utils/pass');
-const commentsRoute = require('./projectSubRoutes/commentsRoute');
 const {user_list_get, user_post, user_get, user_delete, user_update, checkToken} = require("../controllers/userController");
 const router = express.Router();
 const {body} = require('express-validator');
@@ -16,7 +15,8 @@ const fileFilter = (req, file, cb) => {
 }
 const upload = multer({dest: './uploads/user', fileFilter});
 
-router.get('/token', checkToken);
+router.get('/token',passport.authenticate('jwt', {session: false}), checkToken);
+
 router.route('/')
     .get(user_list_get)
     .post(
@@ -27,7 +27,7 @@ router.route('/')
         body('creationDate').notEmpty(),
         body('github').isURL(),
         body('description').isLength({max: 60}),
-        body('tags').isLength({max: 35}),
+        body('tags').isLength({max: 159}),
         body('title').isLength({max: 15}),
         user_post)
     .put(

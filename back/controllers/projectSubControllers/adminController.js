@@ -5,6 +5,7 @@ const {getAllProjectsAdmin, deleteProjectAdmin, getProjectAdmin, insertProjectAd
 
 const project_list_get_admin = async (req, res) => {
     const projects = await getAllProjectsAdmin();
+    console.log('projects admin', projects);
     res.json(projects);
 }
 

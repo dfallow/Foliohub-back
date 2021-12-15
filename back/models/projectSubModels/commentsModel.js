@@ -23,7 +23,7 @@ const insertProjectComment = async (comment) => {
         const params = [comment.userId, comment.projectId, comment.comment];
         const [rows] = await promisePool.query(query, params);
         console.log('insert project comment', rows);
-        return rows.affectedRows === 1;
+        return rows.insertId;
     } catch (e) {
         console.error('insert project comment query', e.message);
     }
