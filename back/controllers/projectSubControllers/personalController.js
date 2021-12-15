@@ -7,10 +7,11 @@ const {
     updateProjectPersonal,
     getProjectPersonal
 } = require("../../models/projectSubModels/personalModel");
+const {makeThumbnail} = require("../../utils/resize");
+const {removeFile, removeFiles} = require("../../utils/removeFile");
 
 const project_list_get_personal = async (req, res) => {
     const projects = await getAllProjectsPersonal(req.user);
-    console.log('all projects', projects);
     res.json(projects);
 }
 
@@ -27,15 +28,28 @@ const project_post_personal = async (req, res) => {
         let imagesString;
 
         if (req.files.logo) {
-            logo = req.files.logo[0].filename;
-        }
-
-        if (req.files.images) {
-            images = [];
-            for (let file of req.files.images) {
-                images.push(file.filename);
+            try {
+                const logoFile = req.files.logo[0];
+                const thumb = await makeThumbnail(logoFile.path, './thumbnails/project/', logoFile.filename);
+                if (thumb) {
+                    console.log('logo thumbnail added');
+                }
+                logo = logoFile.filename;
+            } catch (e) {
+                console.error(e);
             }
-            imagesString = images.toString();
+        }
+        if (req.files.images) {
+            try {
+                const imageFiles = req.files.images;
+                images = [];
+                for (let file of imageFiles) {
+                    images.push(file.filename);
+                }
+                imagesString = images.toString();
+            } catch (e) {
+                console.error(e);
+            }
         }
         req.body.author = req.user.userId;
         const id = await insertProjectPersonal(req.body, imagesString, logo);
@@ -50,18 +64,47 @@ const project_update_personal = async (req, res) => {
         let logo;
         let images;
         let imagesString;
+        const project = await getProjectPersonal(req.params.id, req.user);
         if (req.files.logo) {
-            logo = req.files.logo[0].filename;
-        }
-
-        if (req.files.images) {
-            images = [];
-            for (let file of req.files.images) {
-                images.push(file.filename);
+            const logoFile = req.files.logo[0];
+            if (project.logo) {
+                try {
+                    const removed = await removeFile('./uploads/project/', './thumbnails/project/', project.logo);
+                    console.log('removed logo: ' + removed);
+                } catch (e) {
+                    console.error(e)
+                }
             }
-            imagesString = images.toString();
+            try {
+                const thumb = await makeThumbnail(logoFile.path, './thumbnails/project/', logoFile.filename);
+                if (thumb) {
+                    console.log('logo thumbnail added');
+                }
+                logo = logoFile.filename;
+            } catch (e) {
+                console.error(e)
+            }
         }
-        console.log('image string', imagesString)
+        if (req.files.images) {
+            if (project.images) {
+                try {
+                    const removed = await removeFiles('./uploads/project/', project.images.split(','));
+                    console.log('Number of files removed: ' + removed);
+                } catch (e) {
+                    console.error(e)
+                }
+            }
+            try {
+                const imageFiles = req.files.images;
+                images = [];
+                for (let file of imageFiles) {
+                    images.push(file.filename);
+                }
+                imagesString = images.toString();
+            } catch (e) {
+                console.error(e);
+            }
+        }
         req.body.id = req.params.id;
         req.body.author = req.body.author || req.user.userId;
         const updated = await updateProjectPersonal(req.body, req.user, imagesString, logo);
@@ -73,8 +116,30 @@ const project_update_personal = async (req, res) => {
 
 const project_delete_personal = async (req, res) => {
     req.body.id = req.params.id;
-    const projectDeleted = await deleteProjectPersonal(req.body, req.user);
-    res.json({message: 'project deleted successfully ' + projectDeleted});
+    const project = await getProjectPersonal(req.params.id, req.user);
+    if (project.logo) {
+        try {
+            const removed = await removeFile('./uploads/project/', './thumbnails/project/', project.logo);
+            console.log('removed logo: ' + removed);
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    if (project.images) {
+        try {
+            const removed = await removeFiles('./uploads/project/', project.images.split(','));
+            console.log('Files removed: ' + removed);
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    try {
+        const projectDeleted = await deleteProjectPersonal(req.body, req.user);
+        res.json({message: 'project deleted successfully ' + projectDeleted});
+    } catch (e) {
+        console.error(e);
+    }
+
 }
 
 

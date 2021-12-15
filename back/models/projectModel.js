@@ -24,7 +24,6 @@ const getAllProjects = async () => {
                         WHERE p.private = 0
                         ORDER BY date DESC `;
         const [rows] = await promisePool.query(query);
-        console.log('getAllProjects rows: ', rows)
         return rows;
     } catch (e) {
         console.error('getAllProjects query error: ', e.message);

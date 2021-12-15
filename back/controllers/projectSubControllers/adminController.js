@@ -1,6 +1,5 @@
 'use strict';
 
-
 const {getAllProjectsAdmin, deleteProjectAdmin, getProjectAdmin, insertProjectAdmin, updateProjectAdmin} = require("../../models/projectSubModels/adminModel");
 
 const project_list_get_admin = async (req, res) => {

@@ -25,7 +25,6 @@ const getAllProjectsPersonal = async (user) => {
                     ORDER BY date DESC;`
         let params = [user.userId];
         const [rows] = await promisePool.query(sql, params);
-        console.log('getAllProjectsPersonal: ', rows)
         return rows;
     } catch (e) {
         console.error('getAllProjectsPersonal query error: ', e.message);
