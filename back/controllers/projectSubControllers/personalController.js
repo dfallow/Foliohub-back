@@ -7,10 +7,10 @@ const {
     updateProjectPersonal,
     getProjectPersonal
 } = require("../../models/projectSubModels/personalModel");
+const {makeThumbnail} = require("../../utils/resize");
 
 const project_list_get_personal = async (req, res) => {
     const projects = await getAllProjectsPersonal(req.user);
-    console.log('all projects', projects);
     res.json(projects);
 }
 
@@ -27,15 +27,34 @@ const project_post_personal = async (req, res) => {
         let imagesString;
 
         if (req.files.logo) {
-            logo = req.files.logo[0].filename;
-        }
-
-        if (req.files.images) {
-            images = [];
-            for (let file of req.files.images) {
-                images.push(file.filename);
+            try {
+                const logoFile = req.files.logo[0];
+                const thumb = await makeThumbnail(logoFile.path, './thumbnails/project/', logoFile.filename);
+                if (thumb) {
+                    console.log('logo thumbnail added');
+                }
+                logo = logoFile.filename;
+            } catch (e) {
+                console.error(e);
             }
-            imagesString = images.toString();
+        }
+        if (req.files.images) {
+            try {
+                const imageFiles = req.files.images;
+                let count = 0;
+                for (let image of imageFiles) {
+                    await makeThumbnail(image.path, './thumbnails/project/', image.filename);
+                    count++;
+                }
+                console.log('thumbnails created: ' + count);
+                images = [];
+                for (let file of imageFiles) {
+                    images.push(file.filename);
+                }
+                imagesString = images.toString();
+            } catch (e) {
+                console.error(e);
+            }
         }
         req.body.author = req.user.userId;
         const id = await insertProjectPersonal(req.body, imagesString, logo);
