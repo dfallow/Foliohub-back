@@ -15,7 +15,7 @@
 
 Response:
 
-´´´json
+```json
 {
     "user": {
         "userId": 5,
@@ -31,7 +31,7 @@ Response:
     },
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJuYW1lIjoiU2FtIEjDpG3DpGzDpGluZW4iLCJlbWFpbCI6InNhbWhhbWFsQG1ldHJvcG9saWEuZmkiLCJ0aXRsZSI6IkRldmVsb3BlciIsImNyZWF0aW9uRGF0ZSI6IjE5OTctMTAtMDIiLCJnaXRodWIiOiJodHRwOi8vd3d3LmdpdGh1Yi5jb20iLCJkZXNjcmlwdGlvbiI6IiIsInRhZ3MiOiIiLCJwcm9maWxlUGljIjoiZTNlY2MyNmJjNWRiNjFiNzBhYmQyNzc5ZGE1ZDczMWIiLCJyb2xlIjowLCJpYXQiOjE2Mzk1NjY0NjZ9.RHr3isCNhgr4eta2F-U8z6lc2r_Qt7cY4kKQs5MVyEc"
 }
-´´´
+```
 
 #### Logout
 
