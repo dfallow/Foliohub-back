@@ -35,21 +35,21 @@ Response:
 
 #### Logout
 
-´´´http
+```http
     GET /auth/logout
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 Response:
 
-´´´json
+```json
 {
     "message": "logged out"
 }
-´´´
+```
 
 #### Check token 
 
@@ -62,7 +62,7 @@ Response:
 ```
 
 Response:
-´´´json
+```json
 {
     "user": {
         "userId": 5,
@@ -78,17 +78,17 @@ Response:
         "iat": 1639589663
     }
 }
-´´´
+```
 
 #### Register new user
 
-´´´http
+```http
     POST /user
-´´´
+```
 
-´´´http
+```http
     Content-type: multipart/form-data
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -103,25 +103,25 @@ Response:
 
 Response:
 
-´´´json
+```json
 {
     "message": "User created with id: 80"
 }
-´´´
+```
 
 #### Get all users 
 
-´´´http
+```http
     GET /user
-´´´
+```
 
-´´´http
+```http
     Content-type: application/json
-´´´
+```
 
 Response:
 
-´´´json
+```json
 [
     {
         "userId": 3,
@@ -164,23 +164,23 @@ Response:
     },
     ...
 ]
-´´´
+```
 
 #### Get one user 
 
-´´´http
+```http
     GET /user/:id
-´´´
+```
 
-´´´http
+```http
     Content-type: application/json
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `int` | **Required**. Id of user to fetch |
 
-´´´json
+```json
 {
     "userId": 5,
     "username": "Sam Hämäläinen",
@@ -193,53 +193,53 @@ Response:
     "profilePic": "e3ecc26bc5db61b70abd2779da5d731b",
     "role": 0
 }
-´´´
+```
 
 #### Delete user
 
-´´´http
+```http
     DELETE /user
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 Response:
 
-´´´json
+```json
     "message": "User deleted"
-´´´
+```
 
 #### Update user
 
-´´´http
+```http
     PUT /user
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 Response:
 
-´´´json
+```json
     "message": "User updated with id: 80"
-´´´
+```
 
 #### Get all projects 
 
-´´´http
+```http
     GET /project
-´´´
+```
 
-´´´http
+```http
     Content-type: application/json
-´´´
+```
 
 Response:
 
-´´´json
+```json
 [
     {
         "id": 75,
@@ -269,17 +269,17 @@ Response:
     },
     ...
 ]
-´´´
+```
 
 #### Get one project
 
-´´´http
+```http
     GET /project/:id
-´´´
+```
 
-´´´http
+```http
     Content-type: application/json
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -287,7 +287,7 @@ Response:
 
 Response:
 
-´´´json
+```json
     {
     "id": 74,
     "name": "Bezos or Pezos?",
@@ -301,57 +301,57 @@ Response:
     "author": 58,
     "private": 0
 }
-´´´
+```
 
 #### Update project
 
-´´´http
+```http
     PUT /project/personal/:id
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 Response:
 
-´´´json
+```json
 {
     "message": project updated true
 }
-´´´
+```
 
 #### Delete project
 
-´´´http
+```http
     DELETE /project/personal/:id
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 Response:
 
-´´´
+```
 {
     "message": "project deleted successfully true"
 }
-´´´
+```
 
 #### Post project 
 
-´´´http
+```http
     DELETE /project/personal/:id
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
-´´´http
+```http
     Content-type: multipart/form-data
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -368,21 +368,21 @@ Response:
 
 #### Get all comments for project
 
-´´´http
+```http
     GET /project/comments/:id
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
-´´´http
+```http
     Content-type: application/json
-´´´
+```
 
 Response:
 
-´´´json
+```json
 [
     {
         "commentId": 3,
@@ -403,17 +403,17 @@ Response:
         "profilePic": "6d96631d299a8b1c88ea35340d48063e"
     }
 ]
-´´´
+```
 
 #### Post a comment on project
 
-´´´http
+```http
     POST /project/comments
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -424,39 +424,39 @@ Response:
 
 Response:
 
-´´´json
+```json
 {
     "message": "Comment added with id 76"
 }
-´´´
+```
 
 #### Delete comment from project
 
-´´´http
+```http
     DELETE /project/comments
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 Response:
 
-´´´json
+```json
 {
     "message": "project comment deleted successfully true"
 }
-´´´
+```
 
 #### Get total rating on project
 
-´´´http
+```http
     GET /project/projectRating/:projectId
-´´´
+```
 
-´´´http
+```http
     Content-type: application/json
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -464,21 +464,21 @@ Response:
 
 Response: 
 
-´´´json
+```json
 {
     "rating": "1"
 }
-´´´
+```
 
 #### Giving a rating to project
 
-´´´http
+```http
     POST /project/projectRating/:projectId
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -488,21 +488,21 @@ Response:
 
 Response:
 
-´´´json
+```json
 {
     "message": "Rating added true"
 }
-´´´
+```
 
 #### Updating rating on project
 
-´´´http
+```http
     PUT /project/projectRating/:projectId
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -512,21 +512,21 @@ Response:
 
 Response:
 
-´´´json
+```json
 {
     "message": "project rating updated true"
 }
-´´´
+```
 
 #### Getting personal rating given on project
 
-´´´http
+```http
     GET /project/projectRating/own/:projectId
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -534,27 +534,27 @@ Response:
 
 Response:
 
-´´´json
+```json
 {
     "rating": -1
 }
-´´´
+```
 
 #### Get all projects admin
 
-´´´http
+```http
 coming soon...
-´´´
+```
 
 #### Post a project as admin
 
-´´´http
+```http
     POST /project/admin/
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -571,25 +571,25 @@ coming soon...
 
 Response:
 
-´´´json
+```json
 {
     "message": "Project added with id 81"
 }
-´´´
+```
 
 #### Get one project by id as admin
 
-´´´http
+```http
     GET /project/admin/:projectId
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 Response:
 
-´´´json
+```json
 {
     "id": 33,
     "name": "Not Instant gram",
@@ -603,40 +603,40 @@ Response:
     "author": 5,
     "private": 0
 }
-´´´
+```
 
 #### Delete project as admin
 
-´´´http
+```http
     DELETE /project/admin/:projectId
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 Response:
 
-´´´json
+```json
 {
     "message": "project deleted successfully true"
 }
-´´´
+```
 
 #### Update project as admin
 
-´´´http
+```http
     GET /project/admin/:projectId
-´´´
+```
 
-´´´http
+```http
     Authorization: Bearer token
-´´´
+```
 
 Response:
 
-´´´json
+```json
 {
     "message": "project updated true"
 }
-´´´
+```
