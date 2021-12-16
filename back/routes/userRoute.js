@@ -2,6 +2,7 @@
 const express = require('express');
 const passport = require('../utils/pass');
 const {user_list_get, user_post, user_get, user_delete, user_update, checkToken, refreshToken} = require("../controllers/userController");
+const adminRoute = require('./userAdminRoute');
 const router = express.Router();
 const {body} = require('express-validator');
 const multer = require("multer");
@@ -47,7 +48,7 @@ router.route('/')
         user_update)
     .delete(passport.authenticate('jwt', {session: false}), user_delete)
 
-
+router.use('/admin', passport.authenticate('jwt', {session:false}), adminRoute)
 
 router.route('/:id')
     .get(user_get)
