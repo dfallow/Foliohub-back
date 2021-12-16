@@ -19,7 +19,6 @@ const getOwnRating = async (projectId, user) => {
         const sql = 'SELECT rating FROM gives_rating_to_project WHERE projectId = ? AND userId = ?';
         const params = [projectId, user.userId];
         const [rows] = await promisePool.query(sql, params);
-        console.log('get own rating', rows);
         return rows[0];
     }catch (e) {
         console.log('getting own rating query', e.message);

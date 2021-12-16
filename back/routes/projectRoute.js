@@ -13,9 +13,6 @@ const router = express.Router();
 router.route('/')
     .get(project_list_get)
 
-router.route('/:id')
-    .get(project_get)
-
 // Route -> /project/...
 
 router.use('/personal', passport.authenticate('jwt', {session: false}), personalRoute);
@@ -23,6 +20,7 @@ router.use('/admin', passport.authenticate('jwt', {session:false}), adminRoute);
 router.use('/comments', commentsRoute);
 router.use('/projectRating', projectRatingRoute);
 
-
+router.route('/:id')
+    .get(project_get)
 
 module.exports = router;

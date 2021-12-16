@@ -7,8 +7,8 @@ const login = (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
         console.log('local params', err, user, info);
         if (err || !user) {
-            next(httpError('username / password incorrect', 400));
-            return;
+            // next(httpError('username / password incorrect', 400));
+            return res.json({message: "username / password incorrect"});
         }
         req.login(user, { session: false }, (err) => {
             if (err) {
