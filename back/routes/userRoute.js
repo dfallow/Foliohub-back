@@ -2,11 +2,10 @@
 const express = require('express');
 const passport = require('../utils/pass');
 const {user_list_get, user_post, user_get, user_delete, user_update, checkToken, refreshToken} = require("../controllers/userController");
-const adminRoute = require('./userAdminRoute');
+const userAdminRoute = require('../routes/userAdminRoute');
 const router = express.Router();
 const {body} = require('express-validator');
 const multer = require("multer");
-const {route} = require("express/lib/router");
 const fileFilter = (req, file, cb) => {
     if (file.mimetype.includes('image')) {
         cb(null, true);
@@ -20,6 +19,7 @@ const upload = multer({dest: './uploads/user', fileFilter});
 router.get('/token',passport.authenticate('jwt', {session: false}), checkToken);
 
 router.get('/refreshToken', passport.authenticate('jwt', {session: false}), refreshToken);
+router.use('/admin', passport.authenticate('jwt', {session:false}), userAdminRoute);
 
 router.route('/')
     .get(user_list_get)
@@ -48,7 +48,7 @@ router.route('/')
         user_update)
     .delete(passport.authenticate('jwt', {session: false}), user_delete)
 
-router.use('/admin', passport.authenticate('jwt', {session:false}), adminRoute)
+
 
 router.route('/:id')
     .get(user_get)
