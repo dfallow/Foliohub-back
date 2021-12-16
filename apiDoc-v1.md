@@ -223,6 +223,15 @@ Response:
     Authorization: Bearer token
 ```
 
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `username`      | `string` | Can be modified if user wishes |
+| `title`      | `string` | Can be modified if user wishes |
+| `github`      | `string` | Can be modified if user wishes |
+| `description`      | `string` | Can be modified if user wishes |
+| `tags`      | `string` | Can be modified if user wishes |
+| `profilePic`      | `string` | Can be modified if user wishes |
+
 Response:
 
 ```json
@@ -315,6 +324,10 @@ Response:
     Authorization: Bearer token
 ```
 
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `int` | **Required**. Id of project to update |
+
 Response:
 
 ```json
@@ -333,6 +346,10 @@ Response:
     Authorization: Bearer token
 ```
 
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `int` | **Required**. Id of project to delete |
+
 Response:
 
 ```
@@ -344,7 +361,7 @@ Response:
 #### Post project 
 
 ```http
-    DELETE /project/personal/:id
+    POST /project/personal/
 ```
 
 ```http
@@ -545,7 +562,64 @@ Response:
 #### Get all projects admin
 
 ```http
-coming soon...
+    GET /project/admin
+```
+
+```http
+    Authorization: Bearer token
+```
+
+Response:
+
+```json
+[
+    {
+        "id": 77,
+        "name": "Postman",
+        "date": "2021-12-16 19:03:51",
+        "description": "Testing routes on postman",
+        "video": "juldrxDrSH0",
+        "images": "b0e5255f1ab69cf73e58e84df30697d3,a8bf904ed956efae7076225a825b9eda",
+        "outline": "Testing routes on postman",
+        "logo": "c9a8ad1c304cd4751c9b37fd71a303fc",
+        "tags": "",
+        "author": 58,
+        "private": 1,
+        "comments": 0,
+        "rating": "0"
+    },
+    {
+        "id": 75,
+        "name": "is it working ",
+        "date": "2021-12-16 18:09:08",
+        "description": "pls work",
+        "video": "w7x_lWJNnNg",
+        "images": "87093d64aeb5ea9eb43ef516e5004bfe,9db2c23232253945b5fc912f4de54f95,266a6f509507fd88dfa39e25c994609e,ec3550d0ea673ef05ad9faf95eafaca6",
+        "outline": "by admin",
+        "logo": "ac04cbc25b7aef5fa095c846715b19b9",
+        "tags": "",
+        "author": 62,
+        "private": 1,
+        "comments": 5,
+        "rating": "-2"
+    },
+    {
+        "id": 89,
+        "name": "FolioHub",
+        "date": "2021-12-16 12:50:32",
+        "description": "",
+        "video": "",
+        "images": null,
+        "outline": "",
+        "logo": "9c0ffc4514c6c46772659cccecf2a8cf",
+        "tags": "",
+        "author": 24,
+        "private": 0,
+        "comments": 1,
+        "rating": "1"
+    },
+    ...
+]
 ```
 
 #### Post a project as admin
@@ -640,5 +714,178 @@ Response:
 ```json
 {
     "message": "project updated true"
+}
+```
+
+#### Get all users as admin
+
+```http
+    GET /user/admin
+```
+
+```http
+    Authorization: Bearer token
+```
+
+Response:
+
+```json
+[
+    {
+        "userId": 3,
+        "username": "souly",
+        "password": "souly",
+        "email": "souly@metropolia.fi",
+        "title": "Mascot",
+        "creationDate": "2022-09-09 00:00:00",
+        "github": null,
+        "description": null,
+        "tags": null,
+        "profilePic": null,
+        "role": 0
+    },
+    {
+        "userId": 5,
+        "username": "Sam Hämäläinen",
+        "password": "sam123",
+        "email": "samhamal@metropolia.fi",
+        "title": "Developer",
+        "creationDate": "1997-10-02 00:00:00",
+        "github": "http://www.github.com",
+        "description": "not so short",
+        "tags": "coder,another",
+        "profilePic": "e3ecc26bc5db61b70abd2779da5d731b",
+        "role": 0
+    },
+    {
+        "userId": 7,
+        "username": "souly not 2",
+        "password": "souly",
+        "email": "souly2@metropolia.fi",
+        "title": "admin did this haha",
+        "creationDate": "2021-12-02 00:00:00",
+        "github": null,
+        "description": null,
+        "tags": null,
+        "profilePic": "",
+        "role": 0
+    },
+    {
+        "userId": 10,
+        "username": "testing",
+        "password": "testing",
+        "email": "testing@testing.com",
+        "title": "tester",
+        "creationDate": "2021-12-06 00:00:00",
+        "github": "",
+        "description": "test",
+        "tags": "",
+        "profilePic": "C:\\fakepath\\cat.jpg",
+        "role": 0
+    },
+    ...
+]
+```
+
+#### Get one user as admin
+
+```http
+    GET /user/admin/:id
+```
+
+```http
+    Authorization: Bearer token
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `userId`      | `int` | **Required, id of selected user** |
+
+Response:
+
+```json
+{
+    "userId": 3,
+    "username": "souly",
+    "email": "souly@metropolia.fi",
+    "title": "Mascot",
+    "creationDate": "2022-09-09 00:00:00",
+    "github": null,
+    "description": null,
+    "tags": null,
+    "profilePic": null,
+    "role": 0
+}
+```
+
+#### Delete a user as admin
+
+```http
+    DELETE /user/admin/:id
+```
+
+```http
+    Authorization: Bearer token
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `userId`      | `int` | **Required, id of selected user** |
+
+Response:
+
+```json
+{
+    "message": "user deleted"
+}
+```
+
+#### Update user as admin
+
+```http
+    PUT /user/admin/:id
+```
+
+```http
+    Authorization: Bearer token
+```
+
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `username`      | `string` | Can be modified if admin wishes |
+| `title`      | `string` | Can be modified if admin wishes |
+| `github`      | `string` | Can be modified if admin wishes |
+| `description`      | `string` | Can be modified if admin wishes |
+| `tags`      | `string` | Can be modified if admin wishes |
+| `profilePic`      | `string` | Can be modified if admin wishes |
+
+Response:
+
+```json
+{
+    "message": "User updated with id: 7"
+}
+```
+
+#### Deleting comments as admin
+
+```http
+    DELETE /project/comments/admin
+```
+
+```http
+    Authorization: Bearer token
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `commentId`      | `int` | **Required, id of selected comment** |
+
+Response:
+
+```json
+{
+    "message": "project comment deleted successfully true"
 }
 ```
