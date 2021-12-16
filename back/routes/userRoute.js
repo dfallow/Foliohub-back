@@ -1,10 +1,11 @@
 'use strict';
 const express = require('express');
 const passport = require('../utils/pass');
-const {user_list_get, user_post, user_get, user_delete, user_update, checkToken} = require("../controllers/userController");
+const {user_list_get, user_post, user_get, user_delete, user_update, checkToken, refreshToken} = require("../controllers/userController");
 const router = express.Router();
 const {body} = require('express-validator');
 const multer = require("multer");
+const {route} = require("express/lib/router");
 const fileFilter = (req, file, cb) => {
     if (file.mimetype.includes('image')) {
         cb(null, true);
@@ -16,6 +17,8 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({dest: './uploads/user', fileFilter});
 
 router.get('/token',passport.authenticate('jwt', {session: false}), checkToken);
+
+router.get('/refreshToken', passport.authenticate('jwt', {session: false}, refreshToken))
 
 router.route('/')
     .get(user_list_get)
@@ -43,6 +46,8 @@ router.route('/')
         body('title').isLength({max: 15}),
         user_update)
     .delete(passport.authenticate('jwt', {session: false}), user_delete)
+
+
 
 router.route('/:id')
     .get(user_get)

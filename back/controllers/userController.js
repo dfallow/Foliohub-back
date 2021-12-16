@@ -1,6 +1,6 @@
 'use strict';
 
-const {getAllUsers, getUser, insertUser, deleteUser, updateUser} = require("../models/userModel");
+const {getAllUsers, getUser, insertUser, deleteUser, updateUser, updateToken} = require("../models/userModel");
 const {makeThumbnail} = require("../utils/resize");
 const {removeFile, removeFiles} = require("../utils/removeFile");
 const user_list_get = async (req, res) => {
@@ -73,6 +73,11 @@ const checkToken = (req, res, next) => {
     }
 };
 
+const refreshToken = async (req, res) => {
+    const user = await updateToken(req.user)
+    res.json(user);
+}
+
 module.exports = {
     user_list_get,
     user_get,
@@ -80,4 +85,5 @@ module.exports = {
     user_update,
     user_delete,
     checkToken,
+    refreshToken,
 }
