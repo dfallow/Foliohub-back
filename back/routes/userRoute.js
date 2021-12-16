@@ -18,7 +18,7 @@ const upload = multer({dest: './uploads/user', fileFilter});
 
 router.get('/token',passport.authenticate('jwt', {session: false}), checkToken);
 
-router.get('/refreshToken', passport.authenticate('jwt', {session: false}, refreshToken))
+router.get('/refreshToken', passport.authenticate('jwt', {session: false}), refreshToken);
 
 router.route('/')
     .get(user_list_get)

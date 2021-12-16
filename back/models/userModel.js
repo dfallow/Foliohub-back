@@ -16,7 +16,7 @@ const getAllUsers = async () => {
 
 const getUser = async (userId) => {
     try {
-        const query = 'SELECT userId, username, email, title, creationDate, github, description, tags, profilePic, role FROM users WHERE userId = ? AND NOT role = 1'
+        const query = 'SELECT userId, username, email, title, creationDate, github, description, tags, profilePic, role FROM users WHERE userId = ?'
         const [rows] = await promisePool.query(query, [userId]);
         return rows[0];
     } catch (e) {
@@ -92,7 +92,7 @@ const updateToken = async (user) => {
         const [rows] = await promisePool.execute(
             'SELECT email, password FROM users WHERE userId = ?', [user.userId]
         );
-        return rows;
+        return rows[0];
     } catch (e) {
         console.log(e.message);
     }
