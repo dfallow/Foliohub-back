@@ -21,7 +21,7 @@ DB_PASS=<mariadb-password>
 DB_NAME=<mariadb-database-name>
 JWT_SECRET=secret
 ```
-To create the required tagles execute the SQL script found in `setup.sql` which will create the database foliodb\
+To create the required tagles execute the SQL script found in `foliodb.sql` which will create the database foliodb\
 
 To start the server:
 ```
