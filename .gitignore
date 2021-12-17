@@ -100,7 +100,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+back/.env
 .env.test
 .env.production
 
@@ -290,8 +290,16 @@ $RECYCLE.BIN/
 *.lnk
 
 # ignore content of uploads folder
-*/uploads/*
-*/thumbnails/*
+*/uploads/user/*
+*/uploads/project/*
+*/thumbnails/user/*
+*/thumbnails/project/*
 # except one (empty) file to have the folder in version control
 !*/uploads/.gitkeep
+!*/uploads/user/.gitkeep
+!*/uploads/project/.gitkeep
 !*/thumbnails/.gitkeep
+!*/thumbnails/user/.gitkeep
+!*/thumbnails/project/.gitkeep
+/.idea/modules.xml
+/.idea/vcs.xml

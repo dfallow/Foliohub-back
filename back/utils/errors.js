@@ -1,3 +1,7 @@
+/*
+* Module used for error messages
+*/
+
 'use strict';
 
 const httpError = (message, status) => {

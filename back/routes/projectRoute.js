@@ -1,23 +1,31 @@
+/*
+ * Project route. From here, all public projects can be fetched. Private ones are hidden behind /personal and /admin.
+ * Comments and ratings of projects are found in sub-routes of this route.
+*/
+
 'use strict';
 
 const express = require('express');
 const passport = require('../utils/pass');
 const personalRoute = require('./projectSubRoutes/personalRoute');
 const adminRoute = require('./projectSubRoutes/adminRoute');
-const {project_list_get, project_post, project_get, project_delete, project_update} = require("../controllers/projectController");
+const {project_list_get, project_get} = require("../controllers/projectController");
+const commentsRoute = require("./projectSubRoutes/commentsRoute");
+const projectRatingRoute= require("./projectSubRoutes/projectRatingRoute");
 const router = express.Router();
 
 //Public routes
 router.route('/')
     .get(project_list_get)
-    .post(project_post)
+
+// Route -> /project/...
 
 router.use('/personal', passport.authenticate('jwt', {session: false}), personalRoute);
 router.use('/admin', passport.authenticate('jwt', {session:false}), adminRoute);
+router.use('/comments', commentsRoute);
+router.use('/projectRating', projectRatingRoute);
 
 router.route('/:id')
     .get(project_get)
-    .delete(project_delete)
-    .put(project_update)
 
 module.exports = router;

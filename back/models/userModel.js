@@ -1,3 +1,7 @@
+/*
+* Model for managing accounts. Password and email are never changed.
+*/
+
 'use strict';
 
 const pool = require('../database/db');
@@ -5,9 +9,8 @@ const promisePool = pool.promise();
 
 const getAllUsers = async () => {
     try {
-        const query = 'SELECT * FROM users'
+        const query = 'SELECT * FROM users WHERE NOT role = 1'
         const [rows] = await promisePool.query(query);
-        console.log('getAllUsers rows: ', rows)
         return rows;
     } catch (e) {
         console.error('getAllUsers query error: ', e.message);
@@ -16,7 +19,7 @@ const getAllUsers = async () => {
 
 const getUser = async (userId) => {
     try {
-        const query = 'SELECT * FROM users WHERE userId = ?'
+        const query = 'SELECT userId, username, email, title, creationDate, github, description, tags, profilePic, role FROM users WHERE userId = ?'
         const [rows] = await promisePool.query(query, [userId]);
         return rows[0];
     } catch (e) {
@@ -24,25 +27,42 @@ const getUser = async (userId) => {
     }
 };
 
-const insertUser = async (user) => {
+// insert user only adds a profilePic filename if a file was uploaded
+const insertUser = async (user, file) => {
     try {
-        const query = 'INSERT INTO users(username, password, email, title, creationDate, github, description, tags, profilePic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        const params = [user.username, user.password, user.email, user.title, user.creationDate, user.github, user.description, user.tags, user.profilePic];
-        const [rows] = await promisePool.query(query, params);
+        let sql;
+        let params;
+        if (!file) {
+            sql = 'INSERT INTO users(username, password, email, title, github, description, tags) VALUES (?, ?, ?, ?, ?, ?, ?)'
+            params = [user.username, user.password, user.email, user.title, user.github, user.description, user.tags];
+        } else {
+            sql = 'INSERT INTO users(username, password, email, title, github, description, tags, profilePic) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+            params = [user.username, user.password, user.email, user.title, user.github, user.description, user.tags, file.filename];
+        }
+        const [rows] = await promisePool.query(sql, params);
         console.log('model insert User', rows);
-        return rows.affectedRows === 1;
+        return {"message:": "User created with id: " + rows.insertId};
     } catch (e) {
         console.error('model insert User', e.message);
     }
 }
 
-const updateUser = async (user) => {
+// update user only updates a profilePic filename if a file was uploaded
+const updateUser = async (user, file) => {
     try {
-        let sql = 'UPDATE users SET username = ?, email = ?, title = ?, creationDate = ?, github = ?, description = ?, tags = ?, profilePic = ? WHERE userId = ?'
-        let params = [user.username, user.email, user.title, user.creationDate, user.github, user.description, user.tags, user.profilePic, user.userId];
+        let sql;
+        let params;
+        if (!file) {
+            sql = 'UPDATE users SET username = ?, title = ?, github = ?, description = ?, tags = ? WHERE userId = ?'
+            params = [user.username, user.title, user.github, user.description, user.tags, user.userId];
+        } else {
+            sql = 'UPDATE users SET username = ?, title = ?, github = ?, description = ?, tags = ?, profilePic = ? WHERE userId = ?'
+            params = [user.username, user.title, user.github, user.description, user.tags, file.filename, user.userId];
+        }
         const [rows] = await promisePool.query(sql, params);
-        console.log('user updated', rows)
-        return rows.affectedRows === 1;
+        const userInfo = await getUser(user.userId);
+        console.log('user updated', rows);
+        return {"message": "User updated with id: " + JSON.stringify(userInfo.userId)};
     } catch (e) {
         console.error('error', e.message);
     }
@@ -53,7 +73,8 @@ const deleteUser = async (user) => {
         let sql = 'DELETE FROM users WHERE userId = ?';
         let params = [user.userId];
         const [row] = await promisePool.query(sql, params);
-        return row.affectedRows === 1;
+        console.log('user deleted: ', row);
+        return {"message": "User deleted"};
     } catch (e) {
         console.error('delete user error', e.message);
     }
@@ -71,6 +92,18 @@ const getUserLogin = async (params) => {
     }
 };
 
+// gets user credentials to login again and update token
+const updateToken = async (user) => {
+    try {
+        const [rows] = await promisePool.execute(
+            'SELECT email, password FROM users WHERE userId = ?', [user.userId]
+        );
+        return rows[0];
+    } catch (e) {
+        console.log(e.message);
+    }
+}
+
 module.exports = {
     getAllUsers,
     getUser,
@@ -78,4 +111,5 @@ module.exports = {
     updateUser,
     deleteUser,
     getUserLogin,
+    updateToken
 }

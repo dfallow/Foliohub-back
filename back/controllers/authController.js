@@ -1,3 +1,7 @@
+/*
+* Controller for logging in and getting a token or logging out.
+*/
+
 'use strict';
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -7,15 +11,14 @@ const login = (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
         console.log('local params', err, user, info);
         if (err || !user) {
-            next(httpError('username / password incorrect', 400));
-            return;
+            return res.json({message: "username / password incorrect"});
         }
         req.login(user, { session: false }, (err) => {
             if (err) {
                 next(httpError('login error', 400));
                 return;
             }
-            const token = jwt.sign(user, 'asdhjfkljeklwnflhldls');
+            const token = jwt.sign(user, process.env.JWT_SECRET);
             return res.json({ user, token });
         });
     })(req, res, next);
@@ -23,7 +26,7 @@ const login = (req, res, next) => {
 
 const logout = (req, res) => {
     req.logout();
-    res.json({message: 'logout'});
+    res.json({message: 'logged out'});
 };
 
 
