@@ -41,8 +41,21 @@ const deleteProjectComment = async (comment, user) => {
     }
 }
 
+const deleteProjectCommentAdmin = async (comment) => {
+    try {
+        let sql = 'DELETE FROM writes_about WHERE commentId = ?';
+        let params = [comment.commentId];
+        const [row] = await promisePool.query(sql, params);
+        console.log('delete project comment', params);
+        return row.affectedRows === 1;
+    } catch (e) {
+        console.error('delete project comment error', e.message);
+    }
+}
+
 module.exports = {
     getAllProjectComments,
     insertProjectComment,
     deleteProjectComment,
+    deleteProjectCommentAdmin,
 }
