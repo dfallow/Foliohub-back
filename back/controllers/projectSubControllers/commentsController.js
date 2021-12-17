@@ -5,7 +5,7 @@
 'use strict';
 
 const {
-    getAllProjectComments, insertProjectComment, deleteProjectComment,
+    getAllProjectComments, insertProjectComment, deleteProjectComment, deleteProjectCommentAdmin,
 } = require("../../models/projectSubModels/commentsModel")
 
 const comment_list_get = async (req, res) => {
@@ -32,8 +32,19 @@ const project_delete_comment = async (req, res) => {
     res.json({message: 'project comment deleted successfully ' + commentDeleted});
 }
 
+const project_delete_comment_admin = async (req, res) => {
+    if (req.user.role === 1) {
+        const commentDeleted = await deleteProjectCommentAdmin(req.body);
+        res.json({message: 'project comment deleted successfully ' + commentDeleted});
+    } else {
+        res.json({message: 'You are not admin.'})
+    }
+
+}
+
 module.exports = {
     comment_list_get,
     project_post_comment,
     project_delete_comment,
+    project_delete_comment_admin,
 }
