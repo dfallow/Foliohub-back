@@ -1,3 +1,7 @@
+/*
+* Admin model for managing users. Admin can get any user, update them and delete them, but cannot delete an admin.
+*/
+
 'use strict';
 
 const pool = require('../database/db');
@@ -7,7 +11,6 @@ const getAllUsersAdmin = async () => {
     try {
         const query = 'SELECT * FROM users WHERE NOT role = 1'
         const [rows] = await promisePool.query(query);
-        console.log('getAllUsers rows: ', rows)
         return rows;
     } catch (e) {
         console.error('getAllUsers query error: ', e.message);

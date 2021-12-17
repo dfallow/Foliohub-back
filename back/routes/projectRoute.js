@@ -1,3 +1,8 @@
+/*
+ * Project route. From here, all public projects can be fetched. Private ones are hidden behind /personal and /admin.
+ * Comments and ratings of projects are found in sub-routes of this route.
+*/
+
 'use strict';
 
 const express = require('express');

@@ -1,3 +1,7 @@
+/*
+* Module used for passport functionality
+*/
+
 'use strict';
 
 const passport = require('passport');
@@ -11,7 +15,6 @@ passport.use(new Strategy(async (username, password, done) => {
     const params = [username];
     try {
         const [user] = await getUserLogin(params)
-        console.log('Local strategy', user);
         if (user === undefined) {
             return done(null, false, {message: 'Incorrect email'})
         }
@@ -29,7 +32,6 @@ passport.use(new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
         secretOrKey   : process.env.JWT_SECRET
     }, (jwtPayload, done) => {
-        console.log('jwtpayload', jwtPayload);
         return done(null, jwtPayload);
     }
 ));

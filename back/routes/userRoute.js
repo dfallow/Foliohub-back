@@ -1,3 +1,7 @@
+/*
+* User route
+*/
+
 'use strict';
 const express = require('express');
 const passport = require('../utils/pass');
@@ -17,10 +21,13 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({dest: './uploads/user', fileFilter});
 
 router.get('/token',passport.authenticate('jwt', {session: false}), checkToken);
-
+// this route allows to refresh a token after updating a profile by retrieving the credentials of a user
+// which can be used to login again
 router.get('/refreshToken', passport.authenticate('jwt', {session: false}), refreshToken);
+// route for admins to manage users
 router.use('/admin', passport.authenticate('jwt', {session:false}), userAdminRoute);
 
+// route for managing users (get all, post, put and delete)
 router.route('/')
     .get(user_list_get)
     .post(
@@ -47,8 +54,6 @@ router.route('/')
         body('title').isLength({max: 15}),
         user_update)
     .delete(passport.authenticate('jwt', {session: false}), user_delete)
-
-
 
 router.route('/:id')
     .get(user_get)

@@ -1,3 +1,8 @@
+/*
+* Controller for admins to manage projects. An admin can see all projects, edit and delete them.
+* When projects are deleted or edited, all unused pictures stored one the server are removed.
+*/
+
 'use strict';
 
 const {getAllProjectsAdmin, deleteProjectAdmin, getProjectAdmin, insertProjectAdmin, updateProjectAdmin} = require("../../models/projectSubModels/adminModel");
@@ -27,9 +32,27 @@ const project_post_admin = async (req, res) => {
 
 const project_delete_admin = async (req, res) => {
     req.body.id = req.params.id;
+    const currentProject = await getProjectAdmin(req.params.id);
+    if (currentProject.logo) {
+        try {
+            const removed = await removeFile('./uploads/project/', './thumbnails/project/', currentProject.logo);
+            console.log('removed logo: ' + removed);
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    if (currentProject.images) {
+        try {
+            const removed = await removeFiles('./uploads/project/', currentProject.images.split(','));
+            console.log('Files removed: ' + removed);
+        } catch (e) {
+            console.error(e)
+        }
+    }
     const projectDeleted = await deleteProjectAdmin(req.body);
     res.json({message: 'project deleted successfully ' + projectDeleted});
 }
+
 const project_update_admin = async (req, res) => {
     try {
         let logo;

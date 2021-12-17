@@ -1,3 +1,7 @@
+/*
+* Route for admins. Admins can do anything on any project.
+*/
+
 'use strict';
 
 const express = require('express');

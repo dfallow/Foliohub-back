@@ -1,6 +1,11 @@
+/*
+* Module used for deleting unused pictures and thumbnails
+*/
+
 'use strict';
 const fs = require('fs');
 
+// this one removes both original and thumbnail of an uploaded picture
 const removeFile = async (pathToDirUpload, pathToDirThumb, filename) => {
     try {
         fs.unlinkSync(pathToDirUpload + filename);
@@ -11,6 +16,7 @@ const removeFile = async (pathToDirUpload, pathToDirThumb, filename) => {
     }
 }
 
+// this one iterates through all the filenames provided and deletes the originals
 const removeFiles = async (pathToDirUpload, filenames) => {
     try {
         const files = [];

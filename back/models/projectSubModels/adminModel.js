@@ -1,8 +1,13 @@
+/*
+* Admin model for managing project. The admin can see any project, edit them and delete them.
+**/
+
 'use strict';
 
 const pool = require('../../database/db');
 const promisePool = pool.promise();
 
+// getting all project and their respective comment count and rating.
 const getAllProjectsAdmin = async () => {
     try {
         const sql = `

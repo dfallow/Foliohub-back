@@ -1,3 +1,7 @@
+/*
+* Route for projects ratings. One needs to authenticate to post or put.
+*/
+
 'use strict';
 
 const express = require('express');
@@ -14,7 +18,7 @@ router.route('/:projectId')
         passport.authenticate('jwt', {session: false}),
         project_rating_update)
 
-//for personal rating fetching for projects
+//for fetching personal rating of project
 router.get('/own/:projectId', passport.authenticate('jwt', {session: false}), project_rating_get_own)
 
 module.exports = router;

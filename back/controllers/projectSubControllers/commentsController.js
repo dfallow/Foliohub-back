@@ -1,3 +1,7 @@
+/*
+* Controller for project comments.
+*/
+
 'use strict';
 
 const {

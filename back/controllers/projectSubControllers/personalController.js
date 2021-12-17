@@ -1,3 +1,7 @@
+/*
+* Controller for personal projects.
+*/
+
 'use strict';
 
 const {
@@ -20,6 +24,8 @@ const project_get_personal = async (req, res) => {
     res.json(project);
 }
 
+// if an app logo is uploaded, a thumbnail is created for it. images (illustration for a project) do not have
+// thumbnails as they are always shown at full quality. images are added as a string of filenames separated with a comma.
 const project_post_personal = async (req, res) => {
     try {
         console.log('project post req.body', req.body);
@@ -59,6 +65,7 @@ const project_post_personal = async (req, res) => {
     }
 }
 
+// if updated new files will replace old ones
 const project_update_personal = async (req, res) => {
     try {
         let logo;
@@ -114,6 +121,7 @@ const project_update_personal = async (req, res) => {
     }
 }
 
+// on delete all pictures related to a file are deleted from the server.
 const project_delete_personal = async (req, res) => {
     req.body.id = req.params.id;
     const project = await getProjectPersonal(req.params.id, req.user);
@@ -141,7 +149,6 @@ const project_delete_personal = async (req, res) => {
     }
 
 }
-
 
 module.exports = {
     project_list_get_personal,

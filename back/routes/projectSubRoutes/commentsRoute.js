@@ -1,3 +1,7 @@
+/*
+* Route for project comments. One needs authentication to post or delete. Getting is public.
+*/
+
 'use strict';
 
 const express = require('express');
@@ -12,7 +16,5 @@ router.route('/')
 //project id
 router.route('/:id')
     .get(comment_list_get)
-
-
 
 module.exports = router;

@@ -1,8 +1,14 @@
+/*
+* Model for getting a users personal projects, including private ones.
+* They can also do whatever they want with their own projects.
+*/
+
 'use strict';
 
 const pool = require('../../database/db');
 const promisePool = pool.promise();
 
+// getting all own projects and public with their respective comment count and rating.
 const getAllProjectsPersonal = async (user) => {
     try {
         const sql = `

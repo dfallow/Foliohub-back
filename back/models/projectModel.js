@@ -1,8 +1,13 @@
+/*
+* Model for getting public projects.
+*/
+
 'use strict';
 
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
+// this query return all public projects as well as their respective comment count and rating.
 const getAllProjects = async () => {
     try {
         const query = `
@@ -40,20 +45,7 @@ const getProject = async (projectId) => {
     }
 };
 
-const insertProject = async (project) => {
-    try {
-        const query = 'INSERT INTO projects(name, date, description, video, images, outline, logo, tags, author, private) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        const params = [project.name, project.date, project.description, project.video, project.images, project.outline, project.logo, project.tags, project.author, project.private];
-        const [rows] = await promisePool.query(query, params);
-        console.log('model insert Project', rows);
-        return rows.affectedRows === 1;
-    } catch (e) {
-        console.error('model insert Project', e.message);
-    }
-}
-
 module.exports = {
     getAllProjects,
     getProject,
-    insertProject,
 }

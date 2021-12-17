@@ -24,9 +24,9 @@ app.use('/auth', authRoute);
 app.use('/project', projectRoute);
 app.use('/user', userRoute);
 
-// app.use((req, res, next) => {
-//     const err = httpError('Not found', 404);
-//     next(err);
-// });
+app.use((req, res, next) => {
+    const err = httpError('Not found', 404);
+    next(err);
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}! http://localhost:${port}`));

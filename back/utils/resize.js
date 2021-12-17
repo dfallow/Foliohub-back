@@ -1,3 +1,7 @@
+/*
+* Module used for creating image thumbnails
+*/
+
 'use strict';
 const sharp = require('sharp');
 

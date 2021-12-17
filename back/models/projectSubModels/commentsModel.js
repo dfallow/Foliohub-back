@@ -1,3 +1,8 @@
+/*
+* Model for comments related to a project.
+*/
+
+
 'use strict';
 
 const pool = require('../../database/db');

@@ -1,3 +1,8 @@
+/*
+* Model for getting and handling project ratings. The rating for a project works as a like/dislike counter.
+* The value of a user's rating of an app is either -1, 0 or 1.
+*/
+
 'use strict'
 
 const pool = require('../../database/db');
@@ -14,6 +19,7 @@ const getProjectRating = async (projectId) => {
     }
 }
 
+// getting one's own rating of a project
 const getOwnRating = async (projectId, user) => {
     try{
         const sql = 'SELECT rating FROM gives_rating_to_project WHERE projectId = ? AND userId = ?';

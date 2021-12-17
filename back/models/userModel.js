@@ -1,3 +1,7 @@
+/*
+* Model for managing accounts. Password and email are never changed.
+*/
+
 'use strict';
 
 const pool = require('../database/db');
@@ -7,7 +11,6 @@ const getAllUsers = async () => {
     try {
         const query = 'SELECT * FROM users WHERE NOT role = 1'
         const [rows] = await promisePool.query(query);
-        console.log('getAllUsers rows: ', rows)
         return rows;
     } catch (e) {
         console.error('getAllUsers query error: ', e.message);
@@ -24,6 +27,7 @@ const getUser = async (userId) => {
     }
 };
 
+// insert user only adds a profilePic filename if a file was uploaded
 const insertUser = async (user, file) => {
     try {
         let sql;
@@ -43,6 +47,7 @@ const insertUser = async (user, file) => {
     }
 }
 
+// update user only updates a profilePic filename if a file was uploaded
 const updateUser = async (user, file) => {
     try {
         let sql;
@@ -87,6 +92,7 @@ const getUserLogin = async (params) => {
     }
 };
 
+// gets user credentials to login again and update token
 const updateToken = async (user) => {
     try {
         const [rows] = await promisePool.execute(

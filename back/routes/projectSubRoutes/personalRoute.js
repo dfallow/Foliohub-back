@@ -1,3 +1,8 @@
+/*
+* Route for handling personal projects. From this route, users that are logged in can get, update
+* or add their own projects, public or private, as well as get public ones.
+*/
+
 'use strict';
 
 const express = require('express');

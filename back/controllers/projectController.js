@@ -1,3 +1,7 @@
+/*
+* Controller to get all public users.
+*/
+
 'use strict';
 
 

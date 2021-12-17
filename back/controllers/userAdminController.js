@@ -1,3 +1,8 @@
+/*
+* Controller for admins to manage users. Admin can do anything to existing accounts, except for changing
+* their email or password.
+*/
+
 'use strict';
 
 const {getAllUsersAdmin, getUserAdmin, deleteUserAdmin, updateUserAdmin} = require("../models/userAdminModel");

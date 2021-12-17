@@ -1,3 +1,7 @@
+/*
+* Controller for project ratings.
+*/
+
 'use strict';
 
 const {
